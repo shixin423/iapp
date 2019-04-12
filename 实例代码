@@ -1,0 +1,905 @@
+【获取手机当前电量】
+
+java(管理器,activity,"android.app.Activity.getSystemService","String","batterymanager")
+//初始化
+java(a,管理器,"android.os.BatteryManager.getIntProperty","int",4)
+//获取剩余电量，加上%就是手机剩余的电量
+tw(a)
+【通知系统更新图库】
+说明:保存了视频或者图片之后打开qq的图库却发现不存在，是因为图库没更新
+mian.iyu
+
+call(null,"mjava","photo.更新",路径)
+
+
+photo.mjava
+import android.content.Intent;
+import android.net.Uri;
+import java.io.File;
+
+public 更新(String 目录)
+{
+  File file = new File(i.fdir(目录));
+  activity.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + file)));
+  }
+  
+
+【控件转图片】
+
+gvs(1,控件)
+
+java(宽,控件,"android.view.View.getWidth")
+java(高,控件,"android.view.View.getHeight")
+//这里我动态获取控件高度，你们可以自己填进去
+/.
+这里有几个问题
+1.在载入事件不能获取，返回0
+2.如果是滚动控件，列表控件等等可以滚动的控件，
+获取的高度/不是真实高度宽度，最大只能获取到手机屏的宽高
+造成转出来的图片只是已经显示出来的部分
+可以用自己手动填入宽高来解决
+./
+
+javags(config,null,"android.graphics.Bitmap$Config","ARGB_4444")
+//可选值ARGB_8888，ARGB_4444，RGB_565，ALPHA_8
+//ARGB_8888画质最好，这里用ARGB_4444是为了节约内存
+
+java(图片,null,"android.graphics.Bitmap.*Bitmap","int",宽,"int",高,"android.graphics.Bitmap$Config",config)
+f(图片 == null){
+  tw("似乎出现问题了")
+  endcode
+  }
+javanew(画板,"android.graphics.Canvas","android.graphics.Bitmap",图片)
+
+java(null,控件,"android.view.View.draw","android.graphics.Canvas",画板)
+
+us(6,"src",图片)
+
+
+
+【状态栏白底黑字】
+java(cs, activity, "android.app.Activity.getWindow")
+java(cs2, cs, "android.view.Window.getDecorView")
+java(null, cs2, "android.view.View.setSystemUiVisibility", "int", "8192")
+//设置状态栏透明(沉浸式)
+java(null, cs, "android.view.Window.addFlags", "int", "67108864")
+
+
+【模拟点击事件】
+
+gvs(6,对象)
+java(tag,对象,"android.view.View.getTag")
+ug(4,"text",代码)
+//获取代码
+ss("<eventItme type="clicki">\n"+代码+"\n</eventItme>",代码)
+//相加
+sssz(tag,2,代码)
+java(null,对象,"android.view.View.setTag","Object",tag)
+//设置按钮6代码
+java(状态,对象,"android.view.View.performClick")
+//模拟点击按钮6
+f(状态)
+{
+  tw("运行成功")
+}
+
+
+【获取当前基站天气】
+t()
+{
+  s tqhoo = "User-Agent=Mozilla/5.0 (Linux; Android 8.0.0; MHA-AL00 Build/HUAWEIMHA-AL00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/65.0.3325.109 Mobile Safari/537.36"
+  s tqa="https://m.tianqi.com/"
+  hs(tqa,null,"utf-8",null,true,tqhoo,tqwz)  
+  sj(tqwz,"<text>","</text>",定位)
+  ss("所在地："+定位+"",定位)
+  sj(tqwz,"<text id=\"nowHour\">","</text>",时间)
+  ss(""+时间+" 更新",时间)
+  sj(tqwz,"<div class=\"date\">","</div>",今日)
+  sj(tqwz,"<dt><img src=\"","\"></dt>",天气图标)
+  ss("https://m.tianqi.com"+天气图标+"",天气图标)
+  hd(天气图标,"$天气图标.png",true,tqtb)
+  sj(tqwz,"<dd class=\"now\">","</i></dd>",实时天气)
+  sr(实时天气,"<i>"," ",实时天气)
+  sj(tqwz,"<dd class=\"txt\">","</dd>",天气实况)
+  sj(tqwz,"<span class=\"b1\"><i></i>","</span>",空气质量)
+  sj(tqwz,"<span class=\"b2\"><i></i>","</span>",湿度)
+  sj(tqwz,"<span class=\"b3\"><i></i>","</span>",风向)
+  sj(tqwz,"<div class=\"city_weather cbg_","\"",天气背景)
+ ufnsui()
+ {
+    us(125,"text",定位)
+    us(127,"text",时间)
+    us(113,"text",今日)
+    us(114,"src","$天气图标.png")
+    us(122,"text",实时天气)
+    us(121,"text",天气实况)
+    us(58,"text",空气质量)
+    us(61,"text",湿度)
+    us(64,"text",风向)
+}
+}
+
+【禁止截图】
+
+java(a,activity,"android.app.Activity.getWindow")
+java(null,a,"android.view.Window.addFlags","int",8192)
+//载入事件
+
+【弹出输入法不影响布局】
+
+java(window,activity,"android.app.Activity.getWindow")
+java(null,window,"android.view.Window.setSoftInputMode","int",50)
+
+【图片圆角】
+
+sbp("图片",bitmap)
+
+java(res,activity,"android.content.Context.getResources")
+
+java(sss.drawable,null,"android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory.*","android.content.res.Resources",res,"android.graphics.Bitmap",bitmap)
+
+java(null,sss.drawable,"android.support.v4.graphics.drawable.RoundedBitmapDrawable.setCornerRadius","float",100)
+//圆角度数
+
+us(控件id,"background",sss.drawable)
+
+【高斯模糊背景】
+
+/.
+使用RenderScript进行模糊处理
+bitmap 需要模糊的图片
+注意:bitmap传入mjava的应为
+android.graphics.Bitmap
+传入其他类型报错
+radius 模糊半径
+scale  缩放倍数
+back：模糊后的图片
+./
+
+s bitmap = "/storage/emulated/0/嗯/1040201432-1e6223a7f96d1f9c.jpg"
+s radius = 2
+s scale = 10
+
+sbp(bitmap,bitmap)
+call(back, "mjava", "photo_blur.scriptBlur", bitmap,radius,scale)
+us(1,"background",back)
+
+
+photo_blur.mjava
+
+import java.net.URI;
+import java.io.File;
+import android.graphics.drawable.BitmapDrawable;
+import android.widget.ImageView;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.ScriptIntrinsicBlur;
+import android.renderscript.RenderScript;
+import android.graphics.Bitmap;
+
+
+
+public Bitmap scriptBlur(Bitmap bitmap, int radius, int scale)
+{
+  
+  //直接复用传入的bitmap，回收还给用户处理
+  bitmap = Bitmap.*ScaledBitmap(bitmap, bitmap.getWidth()/scale, bitmap.getHeight()/scale,false);
+  
+  long startTime = System.currentTimeMillis();
+  
+  RenderScript rs = RenderScript.*(activity);
+  ScriptIntrinsicBlur sb = ScriptIntrinsicBlur.*(rs, Element.U8_4(rs));
+  Allocation inp = Allocation.*FromBitmap(rs, bitmap);
+  Allocation otp = Allocation.*Typed(rs, inp.getType());
+  
+  sb.setRadius(radius);
+  sb.setInput(inp);
+  sb.forEach(otp);
+  otp.copyTo(bitmap);
+
+  long endTime = System.currentTimeMillis();
+  long useTime = (endTime - startTime);
+  //syso("处理用时："+useTime+"ms");
+  rs.destroy();
+  sb.destroy();
+  return bitmap;
+}
+
+【检查耳机是否插入】
+//可以放载入事件
+java(音频管理器,activity,"android.content.Context.getSystemService","String","audio")
+java(wh,音频管理器,"android.media.AudioManager.isWiredHeadsetOn")
+ss("耳机插入状态为："+wh,so)
+tw(so)
+
+【java结束进程】
+//自杀进程
+javanew(c,"android.os.Process")
+java(id,c,"android.os.Process.myPid")
+java(a,c,"android.os.Process.killProcess","int",id)
+
+//杀其它应用进程
+//需要权限android.permission.KILL_BACKGROUND_PROCESSES
+javags(as,null,"android.content.Context","ACTIVITY_SERVICE")
+java(am,activity,"android.app.Activity.getSystemService","String",as)
+java(null,am,"android.app.ActivityManager.killBackgroundProcesses","String","com.iapp.app")
+
+【点击加群】
+s qun=123456789
+//群号
+ss("mqqapi://card/show_pslcard?src_type=internal&version=1&uin="+qun+"&card_type=group&source=qrcode",joinqq)
+
+sit(a,"action", "android.intent.action.VIEW")
+sit(a,"data",joinqq)
+uit(a, "chooser", "选择QQ")
+
+
+【修改图片颜色】
+mian.iyu
+
+s id="2"
+//图标id
+s color="#009688"
+//颜色
+call(null, "mlua", "c.main", id, color)
+
+
+lua.mlua
+function main(id, color)
+  --图标着色 
+  if type(id)=="number" then
+    id=i:gvs(id)
+  end
+  import "android.graphics.Color"
+  local color = Color:parseColor(tos(color))
+  id:setColorFilter(color)
+end
+
+
+【控件透明度】
+说明:控件包括但不限于图片
+mian.iyu
+gvs(4,butt)
+//4为控件id
+call(null, "mlua", "lua.main", 50,butt)
+//50就是50%的透明度
+
+lua.mlua
+function main(st_nS, image)
+  image:setAlpha(st_nS / 100)
+end
+
+
+【获取手机壁纸】
+cls("android.app.WallpaperManager",class)
+javax(wm,null,class,"getInstance","Context",activity)
+javax(drawable,wm,class,"getDrawable")
+us(5,"src",drawable)
+
+【设置控件阴影】
+gvs(1,a) 
+
+java(null,a, "android.view.View.setElevation", "float",5) 
+//5为阴影高度 
+
+
+【倒计时】
+
+s id=这里是本文控件id
+t()
+{
+ss("正在倒计时60秒",b)
+ufnsui()
+{
+us(id,"text",b)
+}
+s a=60
+for(1;60)
+{
+f(a==1)
+{
+ufnsui()
+{
+us(id,"text","倒计时完成")
+}
+endcode
+}
+s(a-1,a)
+ss("正在倒计时"+a+"秒",c)
+ufnsui()
+{
+us(id,"text",c)
+}
+stop(1000)
+}
+}
+
+【分享文本】
+sit(a, "action", "android.intent.action.SEND")
+sit(a, "type", "text/plain")
+sit(a, "extra", "android.intent.extra.SUBJECT", "分享软件")
+sit(a, "extra", "android.intent.extra.TEXT", "这里是内容")
+sit(a, "flags", 268435456)
+uit(a, "chooser", "分享")
+
+【密码进入软件】
+s id=4
+//id是编辑框id，也就是密码输入框id
+ug(id,"text",mm)
+s zq="这里是密码内容"
+f(mm==zq)
+{
+ufnsui()
+{
+tw("密码正确")
+//这里还可以添加其他代码
+}
+}
+else
+{
+ufnsui()
+{
+tw("密码错误")
+//这里还可以添加其他代码
+}
+}
+
+【软件更新例子】
+t()
+{
+hs("后台链接",gx)
+sj(gx,"更新版本《","》更新版本",gxbb)
+sj(gx,"更新内容《","》更新内容",gxnr)
+sj(gx,"更新链接《","》更新链接",gxlj)
+f(gxbb!=null)
+{
+f(gxbb>1.1)
+//1.1为当前应用版本，注意要修改
+{
+ss("最新版本:"+gxbb,gxbb)
+ufnsui()
+{
+utw(null, gxbb, gxnr, "下载", false, v)
+{
+ufnsui()
+{
+hw(gxlj)
+}
+}
+}
+
+}
+}
+}
+
+【按两次退出软件】
+
+f(st_kC==4)
+{
+f(sss.exit==null)
+{
+sss exit=0
+tw("再按一次返回键退出",0)
+t()
+{
+stop(600)
+sss exit=null
+}
+}
+else
+{
+end()
+}
+}
+//按两次返回键退出，以上代码请放入：界面事件→按键按下事件
+
+扩展，连续点击两次退出
+f(sss.exit==null)
+{
+sss exit=0
+tw("再点击一次退出",0)
+t()
+{
+stop(600)
+sss exit=null
+}
+}
+else
+{
+end()
+}
+
+
+【远程弹窗公告】
+t()
+{
+hs("这里是网址",a)
+sj(a,"获取符","获取符",b)
+ufnsui()
+{
+utw(null,"公告",b,"知道了",true,sb)
+{
+}
+}
+}
+
+【跳转各种支付】
+
+QQ转账
+
+s qqpay="mqqapi://forward/url?url_prefix=aHR0cHM6Ly9tcXEudGVucGF5LmNvbS92Mi9oeWJyaWQvd3d3L21vYmlsZV9xcS9wYXltZW50L2luZGV4LnNodG1sP193dj0xMDI3JmZyb209MTMmX3ZhY2Y9cXc=&version=1&src_type=web"
+sit(a,"action", "android.intent.action.VIEW")
+sit(a,"data",qqpay)
+uit(a, "chooser", "QQ转账")
+
+AA支付
+
+s qqpay="mqqapi://forward/url?url_prefix=aHR0cHM6Ly9tcXEudGVucGF5LmNvbS9hYV9kZXRhaWw/X3d2PTE3OTMmZj0zJm49N2FhajBrSFRnQ0NGN2JZUUNIUHBhWjlzd191MTFLLWlKQnhfNDN0X1Q3OCUzRA==&version=1&src_type=web"
+sit(a,"action", "android.intent.action.VIEW")
+sit(a,"data",qqpay)
+uit(a, "chooser", "AA支付")
+
+微信支付
+
+s pay="weixin://wap/pay?prepayid%3Dwx201802082005364f54b54f880288375192&package=1327381405&noncestr=1518091536&sign=bdd16aae95aa663ff22e475bf884d3fc" 
+sit(a,"action", "android.intent.action.VIEW")
+sit(a,"data",pay)
+uit(a, "chooser", "微信支付")
+
+支付宝AA支付
+
+s pay="alipays://platformapi/startapp?appId=60000154&url=%2Fwww%2Findex%2Fdetail.htm%3FbatchNo%3D20180429000750021000710012618217%26token%3Dq4kdwhxt%26source%3DqrCode"
+sit(a,"action", "android.intent.action.VIEW")
+sit(a,"data",pay)
+uit(a, "chooser", "支付宝AA支付")
+
+
+
+【隐藏浏览器放大缩小按钮】
+
+gvs(2,wv)
+
+//2是浏览器控件id
+
+java(ws,wv,”android.webkit.WebView.getSettings”)
+
+java(null,ws,”android.webkit.WebSettings.setBuiltInZoomControls”,”boolean”,true)
+
+java(null,ws,”android.webkit.WebSettings.set*ZoomControls”,”boolean”,false)
+
+
+
+【v7列表的多种用法】
+
+.iyu
+//竖直列表
+gvs(4,对象)
+cls("android.support.v7.widget.RecyclerView",列表类)
+cls("android.support.v7.widget.LinearLayoutManager",布局管理类)
+javanew(布局,布局管理类,"Context",activity,"int",1,"boolean",false)
+javax(null,对象,列表类,"setLayoutManager","android.support.v7.widget.RecyclerView$LayoutManager",布局)
+
+//横向列表
+gvs(4,对象)
+cls("android.support.v7.widget.RecyclerView",列表类)
+cls("android.support.v7.widget.LinearLayoutManager",布局管理类)
+javanew(布局,布局管理类,"Context",activity,"int",0,"boolean",false)
+javax(null,对象,列表类,"setLayoutManager","android.support.v7.widget.RecyclerView$LayoutManager",布局)
+
+//网格列表
+gvs(4,对象)
+cls("android.support.v7.widget.RecyclerView",列表类)
+cls("android.support.v7.widget.GridLayoutManager",布局管理类)
+javanew(布局,布局管理类,"Context",activity,"int",3)
+javax(null,对象,列表类,"setLayoutManager","android.support.v7.widget.RecyclerView$LayoutManager",布局)
+
+//瀑布流
+gvs(4,对象)
+cls("android.support.v7.widget.RecyclerView",列表类)
+cls("android.support.v7.widget.StaggeredGridLayoutManager",布局管理类)
+javanew(布局,布局管理类,"int",2,"int",1)
+javax(null,对象,列表类,"setLayoutManager","android.support.v7.widget.RecyclerView$LayoutManager",布局)
+
+
+
+【标题栏图标颜色】
+
+s id=3
+//toolbar的id
+
+utb(id)
+
+gvs(id, mTba)
+
+javags(mMode, null, "android.graphics.PorterDuff$Mode", "SRC_ATOP")
+
+java(颜色,null,"android.graphics.Color.parseColor","String","#ffffff")
+//颜色
+java(mTbaBackSrc, mTba, "android.support.v7.widget.Toolbar.getNavigationIcon")
+java(null, mTbaBackSrc, "android.graphics.drawable.Drawable.setColorFilter", "int", 颜色, "android.graphics.PorterDuff$Mode", mMode)
+
+java(mTbaMenuSrc, mTba, "android.support.v7.widget.Toolbar.getOverflowIcon")
+java(null, mTbaMenuSrc, "android.graphics.drawable.Drawable.setColorFilter", "int", 颜色, "android.graphics.PorterDuff$Mode", mMode)
+
+
+
+【标题栏设置返回键】
+
+mian.iyu
+
+s id=3
+//toolbar的id
+
+utb(id)
+java(mTba, activity, "android.support.v7.app.AppCompatActivity.getSupportActionBar")
+java(null, mTba, "android.support.v7.app.ToolbarActionBar.set*HomeAsUpEnabled", "boolean", true)
+//设置左边为返回键
+
+utb("set", "leftck", id)
+{
+  tw("返回")
+}
+
+
+
+【取mp3内部消息】
+
+
+.iyu
+fdir("@ym.mp3",mp3)
+call(返回,"mjava","mp3.取各种信息",mp3)
+sgsz(返回,0,名字)
+sgsz(返回,1,专辑)
+sgsz(返回,2,歌手)
+sgsz(返回,3,时长)
+sgsz(返回,4,图片)
+us(3,"text","名字: "+名字)
+us(5,"text","专辑: "+专辑)
+us(6,"text","歌手: "+歌手)
+us(7,"text","时长: "+时长+" (毫秒)")
+us(4,"src",图片)
+
+
+mp3.mjava
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
+
+    public static Object[] 取各种信息(String 地址) {
+        MediaMetadataRetriever mmr=new MediaMetadataRetriever();
+        try {
+        mmr.setDataSource(activity,Uri.parse(地址));
+        Object[] 返回=new Object[5];
+        返回[0]=mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+        返回[1]=mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
+        返回[2]=mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+        返回[3]=mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        返回[4]=取封面(mmr);
+        return 返回;
+        } catch (Exception e) {  
+        syso("错误信息:"+e);
+          e.printStackTrace();
+          return null;  
+          }
+        }
+      
+    private Bitmap 取封面(MediaMetadataRetriever mmr)
+    {
+        byte[] picture = mmr.getEmbeddedPicture();
+        if(picture==null)
+        {
+          return null;
+          }
+        Bitmap bitmap= BitmapFactory.decodeByteArray(picture,0,picture.length);
+        return bitmap;
+    }
+    
+  
+
+
+【判断悬浮窗权限】
+
+判断:
+mian.iyu
+call(a, "mlua", "lua.get")
+tw(a)
+//a为flase则无权限
+
+lua.mlua
+function get() 
+import "android.provider.Settings"
+return Settings:canDrawOverlays(activity)
+end
+
+打开设置(与上面用sit效果一样):
+mian.iyu
+call(null, "mlua", "lua.get")
+
+
+lua.mlua
+function get()
+  
+import "android.provider.Settings"
+import "android.content.Intent"
+import "android.net.Uri"
+
+
+intent=Intent("android.settings.action.MANAGE_OVERLAY_PERMISSION")
+intent:setData(Uri:parse("package:" .. activity:getPackageName()))
+activity:startActivity(intent)
+end
+【检测VPN是否开启】
+
+s isVpn = false
+java(nis,null,"java.net.NetworkInterface.getNetworkInterfaces")
+f(nis != null){
+  java(list,null,"java.util.Collections.list","java.util.Enumeration",nis)
+  for(ni;list){
+    java(up,ni,"java.net.NetworkInterface.isUp")
+    java(ia,ni,"java.net.NetworkInterface.getInterfaceAddresses")
+    java(size,ia,"java.util.List.size")
+    f(up && size != 0){
+      java(name,ni,"java.net.NetworkInterface.getName")
+      f(name == "tun0" || name == "ppp0"){
+        s isVpn = true
+        break
+        }
+      }
+    }
+  }
+f(isVpn==true)
+{
+  syso("有抓包")
+  tw("网络错误")
+  end()
+  endcode
+}
+else
+{
+  syso("没有抓包")
+}
+
+
+【隐藏虚拟键】
+
+java(window,activity,"android.app.Activity.getWindow")
+java(params,window,"android.view.Window.getAttributes")
+javass(c,params,"android.view.WindowManager$LayoutParams","systemUiVisibility",1)
+java(c,window,"android.view.Window.setAttributes","android.view.WindowManager$LayoutParams",params)
+
+
+【hs多文件上传】
+
+POST数据填写原来的:(title=标题&content=内容);格式。\n文件要填写完整的文件路径。\n多个文件可以使用"||"隔开例如:\n/sdcard/abc.txt||/sdcard/defg.txt
+
+//上传的地址
+s address = "http://127.0.0.1:21"
+//post数据
+ug(3,"text",a)
+//文件路径
+ug(4,"text",b)
+s f = ""
+s j = ""
+t()
+{
+  sl(a,"&",a)
+for(c;a)
+{
+  sr(c,"([\s\S]+)=([\s\S]+)","--******\r\nContent-Disposition: form-data; name=\"$1\";\r\n\r\n$2\r\n",true,e)
+  ss(f+e,f)
+}
+sl(b,"||",b)
+for(d;b)
+{
+  javanew(file,"java.io.File","String",d)
+  java(name,file,"java.io.File.getName")
+  otob(d,g)
+  btoo(null,g,h)
+  ss("--******\r\nContent-Disposition: form-data; name=\"file\"; filename=\""+name+"\";\r\n\r\n"+h+"\r\n",i)
+  ss(j+i,j)
+}
+  hs(address, f+i+"--******--\r\n", "utf-8", null, true, "Charset: utf-8||Content-Type: multipart/form-data; boundary=******", data)
+  ufnsui()
+  {
+    utw(null,"上传返回的数据",data,"我知道了",true,v)
+    {
+    }
+  }
+}
+
+
+
+
+【设置壁纸】
+
+//初始化包
+cls("android.app.WallpaperManager",wm)
+cls("android.graphics.Bitmap",bitp)
+cls("android.graphics.BitmapFactory",bfy)
+
+//图片路径(/sdcard/+路径)
+s path = "/sdcard/iApp/Userimg/icon_iapp.png"
+//初始化壁纸工具
+javax(Wallm,null,wm,"getInstance","Context",activity)
+//初始化图片为Bitmap变量
+javax(image,null,bfy,"decodeFile","String",path)
+//设置壁纸
+javax(null,Wallm,wm,"setBitmap",bitp,image)
+
+//需要权限<uses-permission android:name="android.permission.SET_WALL_PAPER"/>应该是这个我手写的或者百度安卓设置壁纸权限
+
+
+【图片直链设置背景】
+
+t()
+{
+  //参数:图片URL
+  call(back,"mjava","Http.getInternetPicture","http://m.baidu.com/static/index/favicon-57.png")
+  ufnsui()
+  {
+    //背景可以设置哦
+    us(3,"src",back)
+  }
+}
+
+
+//以下代码放Http.mjava
+
+
+
+import android.app.*;
+import android.content.*;
+import android.graphics.*;
+import android.net.*;
+import java.io.*;
+import java.net.*;
+import android.graphics.drawable.*;
+
+//获取网络图片
+	public static BitmapDrawable getInternetPicture(String UrlPath) {  
+        Bitmap bm = null;  
+        String urlpath = UrlPath;  
+        try {  
+            URL uri = new URL(urlpath);  
+            HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
+            connection.setRequestMethod("GET");  
+            connection.setReadTimeout(5000);  
+            connection.setConnectTimeout(5000);  
+            connection.connect();  
+			if (connection.getResponseCode() == 200) {  
+                InputStream is = connection.getInputStream();  
+                bm = BitmapFactory.decodeStream(is);  
+            } else {
+                bm = null;  
+            }  
+        } catch (MalformedURLException e) {  
+            e.printStackTrace();  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }  
+        return new BitmapDrawable(bm);  
+
+    }
+    
+    
+    
+
+【获取视频第一帧】
+
+s path = 视频路径
+//文件路径
+fdir(path,路径)
+//取绝对路径
+javanew(视频,"android.media.MediaMetadataRetriever")
+//创建实例
+java(null,视频,"android.media.MediaMetadataRetriever.setDataSource","String",路径)
+//设置路径
+java(图像,视频,"android.media.MediaMetadataRetriever.getFrameAtTime")
+//获取图片
+java(null,视频,"android.media.MediaMetadataRetriever.release")
+//释放资源，一定不能漏掉这句，否则超级耗内存
+
+//java(null,null,"java.lang.System.gc")
+//如果立刻需要大量内存空间，去掉上面这句代码的“//”即可
+us(1,"src",图像)
+//设置图像
+//这个我测试是可以用的
+//原本是lua的，由于调用lua越来越慢，我就改成了这样的
+
+
+
+【开关wifi热点】
+
+
+//开启热点
+
+/.
+需要权限
+权限管理里打开 访问网络
+并在Manifest处添加以下权限
+<!-- 更改网络连接性 -->
+<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+<!-- 连接WLAN网络和断开连接 -->
+<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+<!-- 查看网络连接 -->
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<!-- 查看WLAN连接 -->
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+如果没有会员，可使用mt反编译添加
+./
+还需要权限
+<!--写入系统设置 -->
+<uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+s ssid = "测试wifi热点"
+//这是wifi的名称
+s pass = "000000"
+//wifi的密码，必须大于等于8位，如果不需要可留空
+java(管理器,activity,"android.app.Activity.getSystemService","String","wifi")
+//获取wifi管理器
+java(null,管理器,"android.net.wifi.WifiManager.setWifiEnabled","boolean",false)
+//由于wifi与热点不能同时打开，所以需要关闭wifi
+cls("android.net.wifi.WifiConfiguration",热点类)
+//获取类
+javanew(热点,热点类)
+//实例化
+javass(is,热点,热点类,"SSID",ssid)
+//设置SSID
+javass(is,热点,热点类,"preSharedKey",pass)
+//设置密码
+javags(set,热点,热点类,"allowedKeyManagement")
+java(null,set,"java.util.BitSet.set","int",1)
+爱编程
+
+//设置加密模式
+/.
+模式列表
+NONE 0
+WPA_PSK 1
+WPA2_PSK 普通为4，MIUI系统为6
+./
+java(是否成功,管理器,"android.net.wifi.WifiManager.setWifiApEnabled","android.net.wifi.WifiConfiguration",热点,"boolean",true)
+//打开热点
+f(是否成功){
+  tw("开启成功")
+}else{
+  tw("开启失败，可能是因为没有权限")
+}
+
+
+///////关闭热点///////////............//.
+
+/.
+需要权限
+权限管理里打开 访问网络
+并在Manifest处添加以下权限
+<!-- 更改网络连接性 -->
+<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+<!-- 连接WLAN网络和断开连接 -->
+<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+<!-- 查看网络连接 -->
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<!-- 查看WLAN连接 -->
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+如果没有会员，可使用mt反编译添加
+
+还需要权限
+<!--写入系统设置 -->
+<uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+./
+java(管理器,activity,"android.app.Activity.getSystemService","String","wifi")
+//获取wifi管理器
+cls("android.net.wifi.WifiConfiguration",热点类)
+//获取类
+javanew(热点,热点类)
+//实例化
+java(是否成功,管理器,"android.net.wifi.WifiManager.setWifiApEnabled","android.net.wifi.WifiConfiguration",热点,"boolean",false)
+//关闭热点
+f(是否成功){
+  tw("关闭成功")
+}else{
+  tw("关闭失败，可能是因为没有权限")
+}
+
