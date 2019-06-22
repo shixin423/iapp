@@ -1,3 +1,24 @@
+【java获取视频任意一帧】
+fdir("%a.mp4",路径)
+javanew(mmr,"android.media.MediaMetadataRetriever")
+java(null,mmr,"android.media.MediaMetadataRetriever.setDataSource","String",路径)
+java(图片,mmr,"android.media.MediaMetadataRetriever.getFrameAtTime","long",0)
+//%a.mp4为视频路径，最后的图片使用us就可以设置到src或者backound，最后的0换第0帧，可改变，但不得超过视频总帧数
+
+【Toolbar设置返回键】
+s id=3
+//toolbar的id
+
+utb(id)
+java(mTba, activity, "android.support.v7.app.AppCompatActivity.getSupportActionBar")
+java(null, mTba, "android.support.v7.app.ToolbarActionBar.setDisplayHomeAsUpEnabled", "boolean", true)
+//设置左边为返回键
+
+utb("set", "leftck", id)
+{
+  tw("返回")
+}
+
 【Toolbar标题栏图标颜色】
 s id=3
 //toolbar的id
