@@ -1,3 +1,115 @@
+【mjava调用图库】
+//iyu
+调用:
+javags(agc,"android.content.Intent","android.content.Intent.ACTION_GET_CONTENT")
+javanew(it,"android.content.Intent","String",agc)
+java(c,it,"android.content.Intent.setType","String","image/*")
+javags(ca,"android.content.Intent","android.content.Intent.CATEGORY_OPENABLE")
+java(c,it,"android.content.Intent.addCategory","String",ca)
+java(c,activity,"android.app.Activity.startActivityForResult","android.content.Intent",it,"int",2)
+
+回调:
+javags(er,activity,"android.app.Activity","RESULT_OK")
+f(st_lC==er)
+{
+  f(st_sC==2)
+  {
+    java(uri,st_iT,"android.content.Intent.getData")
+    call(path, "mjava", "uri.getRealPath", activity, uri)
+    syso(path)
+    us(2, "src", path)
+    us(3, "text", path)
+    //path为图片路径
+  }
+}
+
+
+
+
+
+uri.mjava
+//新建一个名为uri的mjava文件
+import android.content.ContentUris;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
+import android.database.Cursor;
+import android.content.Context;
+
+public static String getRealPath(Context context, Uri uri)
+{
+  String imagePath = null;
+  if(DocumentsContract.isDocumentUri(context, uri))
+  {
+    // 如果是document类型的Uri，则通过document id处理
+            
+    String docId = DocumentsContract.getDocumentId(uri);
+           
+    if ("com.android.providers.media.documents".equals(uri.getAuthority()))
+            
+    {
+                
+      String id = docId.split(":")[1];           
+      String selection = MediaStore.Images.Media._ID + "=" + id;
+  
+      imagePath = getImagePath(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+    }
+            
+    else if ("com.android.providers.downloads.documents".equals(uri.getAuthority()))
+            
+    {
+                
+      Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
+      imagePath = getImagePath(context, contentUri, null);
+    }
+  }
+  else if("content".equalsIgnoreCase(uri.getScheme()))
+  {
+    // content类型普通方式处理
+    imagePath = getImagePath(context, uri, null);
+  }
+  else if("file".equalsIgnoreCase(uri.getScheme()))
+  {
+    // file类型直接获取图片路径
+    imagePath = uri.getPath();
+  }
+  return imagePath;
+}
+
+public String getImagePath(Context context, Uri uri, String selection)
+{
+  String path = null;
+  // 通过Uri和selection来获取真实的图片路径
+  Cursor cursor = context.getContentResolver().query(uri, null, selection, null, null);
+  if (cursor != null)
+  {
+    syso(cursor.moveToFirst());
+    if (cursor.moveToFirst())
+    {
+      path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+    }
+    cursor.close();
+  }
+  return path;
+}
+
+
+【WebView网页放大缩小】
+放大:
+gvs(1,ss.wv)
+java(c,ss.wv,"android.webkit.WebView.zoomIn")
+
+缩小:
+gvs(1,ss.wv)
+java(c,ss.wv,"android.webkit.WebView.zoomOut")
+
+【设置控件阴影】
+gvs(2, 标题栏)
+//2为控件
+zdp(4, 标题栏阴影)
+//4为阴影厚度
+java(null,标题栏,"android.view.View.setElevation", "float",标题栏阴影)
 【java获取视频任意一帧】
 fdir("%a.mp4",路径)
 javanew(mmr,"android.media.MediaMetadataRetriever")
