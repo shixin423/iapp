@@ -1,5 +1,19 @@
-【测试】
-测试
-【测试】
-测试
-【嘀嘀嘀】
+【Toolbar标题栏图标颜色】
+s id=3
+//toolbar的id
+
+utb(id)
+
+gvs(id, mTba)
+
+javags(mMode, null, "android.graphics.PorterDuff$Mode", "SRC_ATOP")
+
+java(颜色,null,"android.graphics.Color.parseColor","String","#ffffff")
+//颜色
+
+java(mTbaBackSrc, mTba, "android.support.v7.widget.Toolbar.getNavigationIcon")
+java(null, mTbaBackSrc, "android.graphics.drawable.Drawable.setColorFilter", "int", 颜色, "android.graphics.PorterDuff$Mode", mMode)
+
+java(mTbaMenuSrc, mTba, "android.support.v7.widget.Toolbar.getOverflowIcon")
+java(null, mTbaMenuSrc, "android.graphics.drawable.Drawable.setColorFilter", "int", 颜色, "android.graphics.PorterDuff$Mode", mMode)
+
