@@ -4316,7 +4316,7 @@ javass(a, null, "com.iapp.app.ays.nt", 1000)
 end fn
 
 
-然后 权限配置管理》application配置 将下面的配置粘贴进去：
+然后 《权限配置管理》application配置 将下面的配置粘贴进去：
 	<service
             android:name="com.iapp.app.ays"
             android:label="iapp开发工具无障碍辅助功能"
