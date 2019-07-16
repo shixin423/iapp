@@ -1,3 +1,27 @@
+【文件夹相关操作】
+
+s file="shixin/iapp"
+fdir(file,uri)
+javanew(file,"java.io.File","java.lang.String",uri)
+//创建新的多级文件夹
+java(创建多级判断,file,"java.io.File.mkdirs")
+syso(创建多级判断)
+
+//创建文件夹
+java(创建文件夹判断,file,"java.io.File.mkdir")
+syso(创建文件夹判断)
+
+//判断文件夹是否存在
+java(文件夹存在,file,"java.io.File.isDirectory")
+syso(文件夹存在)
+
+//删除文件夹,只能删除空文件夹
+java(删除状态,file,"java.io.File.delete")
+syso(删除状态)
+
+
+
+
 【自定义utw弹窗】
 cls("android.app.AlertDialog", 弹窗子类)
 s cls = "android.app.AlertDialog$Builder"
