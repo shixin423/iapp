@@ -1,3 +1,75 @@
+【自定义utw弹窗】
+cls("android.app.AlertDialog", 弹窗子类)
+s cls = "android.app.AlertDialog$Builder"
+cls(cls,弹窗类)
+javanew(弹窗对象, 弹窗类, "android.content.Context", activity)
+javax(null, 弹窗对象, cls, "setMessage","CharSequence","欢迎加入iapp大本营！")
+//javax(null, 弹窗对象, cls, "setCancelable", "boolean", false)
+//设置是否可以取消
+javax(null,弹窗对象,cls,"setTitle","CharSequence","提示")
+cls("android.content.DialogInterface$OnClickListener", 事件类)
+javacb(点击事件, 事件类)
+{
+  end()
+}
+javacb(中间事件,事件类)
+{
+  end()
+  }
+javax(null, 弹窗对象, 弹窗类, "setNegativeButton", "CharSequence", "进入软件", 事件类, 中间事件)
+javax(null, 弹窗对象, 弹窗类, "setPositiveButton", "CharSequence", "确定", 事件类, 点击事件)
+javax(弹窗对象,弹窗对象,cls,"create")
+java(null,弹窗对象,"android.app.Dialog.show")
+//显示
+//注意，以下所有代码必须在show之后调用！否则报错
+javags(对话框,弹窗对象,"android.app.AlertDialog","mAlert")
+javags(标题,对话框,"com.android.internal.app.AlertController","mTitleView")
+//取得标题
+us(标题,"textcolor","#E91E63")
+javags(消息,对话框,"com.android.internal.app.AlertController","mMessageView")
+//取得消息
+us(消息,"textcolor","#E91E63")
+javax(右边按钮, 弹窗对象, 弹窗子类, "getButton", "int", -1)
+us(右边按钮, "textcolor", "#E91E63")
+//设置按钮颜色
+java(window,弹窗对象,"android.app.Dialog.getWindow")
+javags(位置,null,"android.view.Gravity","CENTER")
+/.TOP
+CENTER
+BOTTOM
+RIGHT
+LEFT
+./
+java(null,window,"android.view.Window.setGravity","int",位置)
+//设置弹窗位置，不设置默认为CENTER
+cls("android.view.WindowManager$LayoutParams",cls_lp)
+java(lp,window,"android.view.Window.getAttributes")
+zdp(-1,宽度)
+javass(null,lp,"android.view.ViewGroup$LayoutParams","width",宽度)
+//设置弹窗宽度
+zdp(-1,高度)
+javass(null,lp,"android.view.ViewGroup$LayoutParams","height",高度)
+//设置弹窗高度
+//弹窗的高度和宽度的单位为px，可以通过zdp把dp转换为px
+javass(null,lp,"android.view.WindowManager$LayoutParams","y",0)
+//设置y轴位置
+javass(null,lp,"android.view.WindowManager$LayoutParams","x",0)
+//设置x轴位置
+java(null,window,"android.view.Window.setAttributes",cls_lp,lp)
+//设置为自定义样式
+java(win,弹窗对象,"android.app.Dialog.getWindow")
+java(don,win,"android.view.Window.getDecorView")
+
+s a = 0
+s b = 40
+s c = "#00000000"
+s d = "#333333"
+ngde(a, b, c, d, f)
+
+//背景
+us(don,"background",f)
+
+
 【设置布局单个或多个圆角】
 //iyu调用代码
 
