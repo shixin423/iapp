@@ -1,3 +1,193 @@
+
+【修改浮动按钮背景/图片颜色】
+gvs(4,fab)
+java(图标颜色,null,"android.graphics.Color.parseColor","String","#009688")
+java(背景颜色,null,"android.graphics.Color.parseColor","String","#00ff00")
+
+java(null, fab, "android.widget.ImageView.setColorFilter", "int", 图标颜色)
+java(背景颜色,null,"android.content.res.ColorStateList.valueOf","int",背景颜色)
+java(null, fab, "android.support.design.widget.FloatingActionButton.setBackgroundTintList","android.content.res.ColorStateList",背景颜色)
+
+【base64加解密】
+
+//Base64编码：
+s 原文 = "残页"
+java(字节数组,原文,"java.lang.String.getBytes")
+//转成byte[]字节数组
+java(密文,null,"android.util.Base64.encodeToString","byte[]",字节数组,"int",0)
+//Base64编码，0是模式
+//如果失败请更改模式
+/.
+模式列表：
+DEFAULT=0
+NO_PADDING=1
+NO_WRAP=2
+CRLF=4
+URL_SAFE=8
+./
+tw(密文)
+
+//base64解码：
+s 密文 = "5q6L6aG1"
+java(字节数组,null,"android.util.Base64.decode","String",密文,"int",0)
+//Base64解码，0是模式
+//如果失败请更改模式
+javanew(原文,"java.lang.String","byte[]",字节数组)
+//由于返回的是byte[]字节数组，所以转化成字符串
+tw(原文)
+
+//作者:残页
+
+
+【耳机是否插入】
+java(音频管理器,activity,"android.content.Context.getSystemService","String","audio")
+java(wh,音频管理器,"android.media.AudioManager.isWiredHeadsetOn")
+ss("耳机插入状态为："+wh,so)
+tw(so)
+
+【获取当前应用悬浮窗权限】
+java(opps,null,"android.provider.Settings.canDrawOverlays","android.content.Context",activity)
+tw(opps)
+
+【跳转悬浮窗设置界面】
+sit(a, "action", "android.intent.action.VIEW")
+sit(a, "action", "android.settings.action.MANAGE_OVERLAY_PERMISSION")
+cls("android.content.ContextWrapper",类)
+javax(one,activity,类,"getPackageName")
+ss("package:"+one,pk)
+sit(a, "data", pk)
+uit(a, "chooser", "设置悬浮窗权限")
+
+【自定义tws背景等】
+
+//需要一个容器
+gvs(1,view)
+cls("android.support.design.widget.Snackbar",类)
+//文本传入和时间
+javax(snk,null,类,"make","android.view.View",view,"java.lang.CharSequence","Snkbar，后面number单位是毫秒","int",3000)
+cls("android.view.View$OnClickListener", 事件类)
+javacb(事件, 事件类)
+{
+s qun=123456789
+ss("mqqapi://card/show_pslcard?src_type=internal&version=1&uin="+qun+"&card_type=group&source=qrcode",joinqq)
+sit(a,"action", "android.intent.action.VIEW")
+sit(a,"data",joinqq)
+uit(a, "chooser", "选择QQ")
+}
+//按钮的文字
+javax(null,snk,类,"setAction","java.lang.CharSequence","确定",事件类,事件)
+//按钮的颜色
+java(颜色,null,"android.graphics.Color.parseColor","String","#00ffff")
+javax(null,snk,类,"setActionTextColor","int",颜色)
+javax(get,snk,"android.support.design.widget.BaseTransientBottomBar","getView")
+//us(get,"backgroundcolor","#ff3f51b5")
+us(get,"background","@chbar.jpg")
+//可以设置图片背景
+//us(get,"height","300dp")
+//可以设置高度
+java(null, snk, "android.support.design.widget.BaseTransientBottomBar.show")
+javags(id,null,"android.support.design.R$id","snackbar_text")
+java(文本,get,"android.view.View.findViewById","int",id)
+us(文本,"textcolor","#0000ff")
+//文本颜色
+
+
+
+
+【图片黑白化】
+
+//sbp("@chbar.jpg",bmp)
+tot(1, bmp)
+
+java(宽, bmp, "android.graphics.Bitmap.getWidth")
+java(高, bmp, "android.graphics.Bitmap.getHeight")
+
+javags(config,null,"android.graphics.Bitmap$Config","RGB_565")
+java(图片,null,"android.graphics.Bitmap.createBitmap","int",宽,"int",高,"android.graphics.Bitmap$Config",config)
+javanew(画板,"android.graphics.Canvas","android.graphics.Bitmap",图片)
+javanew(paint,"android.graphics.Paint")
+javanew(cm,"android.graphics.ColorMatrix")
+java(null,cm,"android.graphics.ColorMatrix.setSaturation","float",0)
+javanew(cmcf,"android.graphics.ColorMatrixColorFilter","android.graphics.ColorMatrix",cm)
+java(null,paint,"android.graphics.Paint.setColorFilter","android.graphics.ColorFilter",cmcf)
+java(null,画板,"android.graphics.Canvas.drawBitmap","android.graphics.Bitmap",bmp,"float",0,"float",0,"android.graphics.Paint",paint)
+
+
+us(2,"src",图片)
+
+
+
+
+【获取当前软件相关信息】
+
+javax(pm,activity,"android.content.ContextWrapper","getPackageManager")
+
+javax(pknm,activity,"android.content.ContextWrapper","getPackageName")
+//本应用包名
+syso(pknm)
+
+javax(ver,pm,"android.content.pm.PackageManager","getPackageInfo","String",pknm,"int",0)
+javags(版本,ver,"android.content.pm.PackageInfo.versionName")
+//本包名的版本
+syso(版本)
+
+javax(icon,pm,"android.content.pm.PackageManager","getApplicationInfo","String",pknm,"int",0)
+javax(图标,icon,"android.content.pm.PackageItemInfo","loadIcon","android.content.pm.PackageManager",pm)
+//本应用图标
+syso(图标)
+
+javags(pkg,ver,"android.content.pm.PackageInfo.applicationInfo")
+javax(应用名称,pkg,"android.content.pm.PackageItemInfo","loadLabel","android.content.pm.PackageManager",pm)
+//本应用名
+syso(应用名称)
+
+
+javags(time,ver,"android.content.pm.PackageInfo.lastUpdateTime")
+javanew(格式, "java.text.SimpleDateFormat", "String", "yyyy年MM月dd日H时mm分ss秒")
+javanew(时间, "java.util.Date", "long", time)
+java(更新时间, 格式, "java.text.DateFormat.format", "java.util.Date", 时间)
+//本应用最后一次更新时间
+syso(更新时间)
+
+【强制隐藏输入法】
+java(acit,activity,"android.content.ContextWrapper.getApplicationContext")
+java(windows,activity,"android.content.Context.getSystemService","String","input_method")
+java(getact,activity,"android.app.Activity.getCurrentFocus")
+java(win,getact,"android.view.View.getWindowToken")
+java(null,windows,"android.view.inputmethod.InputMethodManager.hideSoftInputFromWindow","android.os.IBinder",win,"int","0")
+
+【获取电量信息】
+javanew(intentFilter,"android.content.IntentFilter","String","android.intent.action.BATTERY_CHANGED")
+java(batteryStatus,activity,"android.content.Context.registerReceiver","android.content.BroadcastReceiver",null,"android.content.IntentFilter",intentFilter)
+//BATTERY_CHANGED是一个粘性广播，所以传null值就能拿到当前状态
+
+java(status,batteryStatus,"android.content.Intent.getIntExtra","String","status","int",-1)
+f(status == 2) {
+  tw("充电中")
+  } else f(status == 3 || status == 4) {
+  tw("放电中")
+  } else f(status == 5) {
+  tw("已充满")
+  }
+
+java(plug,batteryStatus,"android.content.Intent.getIntExtra","String","plugged","int",-1)
+f(plug == 1) {
+  tw("AC充电中")
+  } else f(plug == 2) {
+  tw("USB充电中")
+  } else f(plug == 4) {
+  tw("无线充电中")
+  }
+
+java(level,batteryStatus,"android.content.Intent.getIntExtra","String","level","int",-1)
+//当前电池电量
+java(scale,batteryStatus,"android.content.Intent.getIntExtra","String","scale","int",-1)
+//最大电池电量
+ss("当前电池电量：" + level + "
+最大电池电量：" + scale,msg)
+tw(msg)
+
+
 【文件夹相关操作】
 
 s file="shixin/iapp"
