@@ -1,0 +1,2508 @@
+﻿《裕语言v5》速成开发手册5.0
+日期：2019/06/30
+
+官方用户交流：
+
+ 官方源码开源群：323924434 
+ iApp技术开发群：343406599 
+ 官方1群：239547050 
+ 官方2群：103540883 
+ 官方3群：216954373 
+ 官方4群：334267540 
+ 官方5群：207037477 
+ 官方游戏开发群：375679257 
+
+
+《裕语言V5》是解释型语言，丰富的类库定置简单快速开发你的应用程序，让开发过程变得娱乐化大众化。《裕语言》是由计算编程工程师 黄裕先生 为主导，宇恒先生、宇辰先生等工程师共同参与完成开发，定制以及实现成型代码功能，其代码简单方便的编写体验是一大亮点。裕语言的开发应用程序语言，全面向公众开放平台，任何有兴趣的人都可以参与开放设计自己的程序。
+
+《裕语言V5》所有的预设代码命名采用 拼音开头字母/ 全拼等。整体符合主流，采用面向对象方式编程，所有代码都由根对象延伸，简入深出的系统性学习。支持导入原生android 所有的SDK；所有代码都编译成 java代码，再编译成dex文件。
+
+
+【指定系统编译】
+
+[方案一]
+
+// 在裕语言V5中可以指定系统来编译代码
+
+//执行 java 多行代码
+java
+{
+  String str = "这是 iApp";
+  android.util.Log.v("iapp", str);
+
+}
+
+//执行 java 单行代码
+java android.util.Log.v("iapp", "这是 iApp");
+
+
+[方案二]
+
+// 裕语言V5 允许java 格式文件，进行混编交互。
+
+// 创建 *.java 文件 并且完全支持 android 原生开发。
+
+
+【目录开头符号标识】
+
+// 代码中需要输入一个文件的代码，填写路径的开头第一个可以使用符号进行快捷指向路径
+
+// 路径开头为 % 硬盘分区根路径
+
+// 路径开头为 @ 包内资源路径
+
+// 路径开头为 $ 应用安装位置路径
+
+
+【裕语言v5 里的根对象】
+
+用法：
+
+//这是裕语言V5里的根对象，也是所有子对象的父对象，裕语言V5 所有代码的源头命名。
+iapp
+
+
+//------- 根对象的 子对象
+
+// 字符管理对象
+iapp.zf
+
+// 数据管理对象
+iapp.sj
+
+// 视图管理对象
+iapp.st
+
+// 文件管理对象
+iapp.wj
+
+// 工具管理对象
+iapp.gj
+
+// 网络管理对象
+iapp.wl
+
+// 系统管理对象
+iapp.xt
+
+//前缀 iapp 是根对象的，也可以直接写它的子对象
+
+如：
+// 工具对象 里的 输出方法
+gj.sc("输出文字")
+
+
+//------- 根对象的 方法
+
+// 为了更简便的使用常用方法，根对象提供以下方法：
+
+// 输出
+iapp.gj.sc(123) 可直接使用 gj.sc(123)
+
+【资源管理对象】
+// 资源管理对象，与代码根对象不同，主要的作用是获取项目内相关资源的ID
+// 资源管理对象的 根对象
+zy 或 iapp.zy
+
+
+// 获取 strings.xml 内的名称为 a 字符串
+s a = zf.zf(zy.z.a)
+
+// 获取 drawable 内的文件名为 b.xml 的文件，常用于背景的绘制
+s b = sj.hz(zy.h.b)
+
+// 获取 mipmap 内的文件名为 c.png 的图像资源ID（一个整数），可将ID设置给图像控件、图像按钮控件等
+s c = zy.t.c
+
+// 获取控件的ID
+s d = zy.id.wb1
+//或
+//s d = zy.i.wb1
+
+
+【类模块对象的创建】
+
+// myu 类模块需要先创建对象
+cj 或  iapp.cj
+
+// 创建 abc.myu 类模块的对象，同时会调用 abc.myu 类模块的构造 ff lei()
+s abc = cj.abc()
+
+// 调用类模块的变量
+s b = abc.b
+
+// 调用类模块的方法
+s c = abc.c()
+
+
+【修饰符】
+
+// 全局；在变量或 方法前加上后可使用 文件名.方法或变量名 进行访问。
+qj
+
+// 私有；在变量或 方法前加上后，方法或变量名仅供当前文件访问。
+sy
+
+// 固定；申明 变量 并赋值后，其值不可改变。其变量可在方法内任意代码块里调用，如下
+gd
+
+// gd 例1
+ff a()
+{
+
+gd s abc = "abc"
+
+// 创建线程
+gj.xc(){
+
+gj.sc(abc)
+
+}
+
+}
+
+
+【s 数据类型】
+
+用法：
+
+// 推断类型
+
+//说明：根据首次赋值的数据来推断变量类型。推断类型 无法作为方法的申明参数变量使用。
+
+
+// 字符串型（String）
+s d = "nihao"
+string d2 = "nihao"
+
+
+// 整数型（int）
+s e = 123
+int e2 = 123
+
+
+// 小数型（double）
+s f = 123.123
+double f2 = 123.123
+
+
+// 是否型（boolean）
+s g = shi
+boolean g2 = fou
+//可以这写
+//s g = true
+//boolean g2 = false
+
+
+// 数据型（Object）
+s h = kong
+object h = null
+
+//可以这写，不赋值。注意：变量默认值不为 kong 
+//s h
+//object h
+
+
+// 方法参数变量需要指向性数据类型
+
+方法，例：
+
+ff jyg(s bl = 0)
+{
+fh bl + 1
+}
+
+// 全局变量：需要写在类模块里，并且不能写在方法内，应该写在方法外；
+
+// 1. 在 类模块 里申明的变量；可以在该类中的所有方法 或 事件方法 内使用；
+s abc = 1
+
+// 增加全局修饰符
+qj s abc2 = 2
+
+【myu 类模块】
+// 创建一个 abc.myu 源码文件，内容如下：
+
+// 创建 模块变量 a并赋值
+s a = "NiHao"
+s aa
+qj s aaa = "全局变量"
+
+// 构造方法
+ff lei(s a)
+{
+aa = a
+}
+
+// 创建方法 b
+ff s b()
+{
+  fh a
+}
+
+// 创建方法 c
+ff s c(s d)
+{
+  fh a + d + aa
+}
+
+// ----- 调用实例 -----
+
+// 新建对象
+s abc = xj.abc("hahaha")
+
+// 输出 模块变量 a
+gj.sc(abc.a)
+
+// 输出 模块方法 b
+gj.sc(abc.b())
+
+// 输出 模块方法 c
+gj.sc(abc.c("Ma?"))
+
+
+【ff 方法】
+
+// 以 ff 开头 + [可选：修饰符] + [可选：方法返回类型] + 方法名 ( 参数 [可选：强制参数类型] )
+ff abc()
+{
+  gj.sc("这是 无返回数据，无参数 的方法")
+}
+
+
+// fh 为 返回数据的代码
+
+// 返回如设置 s 将等同于Object类型
+ff s abc(s a)
+{
+  gj.sc("这是 返回数据a + 123，参数变量a将等同于Object类型 的方法")
+  fh a + 123
+}
+
+// 返回如设置 int 为整数类型
+ff int abc(s a = 0)
+{
+  gj.sc("这是 返回数据a + 123，参数变量a预设值为整数0将 s 类型强制转换为 int 的方法")
+  fh a + 123
+}
+
+
+// 修饰符 qj 为全局方法，其他界面 与 模块 里可以调用
+// 返回如设置 int 为整数类型
+qj ff int abc(int a)
+{
+  gj.sc("这是 返回数据a + 123，参数变量a类型为 int 的方法")
+  fh a + 123
+}
+
+
+【// 或 /* */ 注释】
+
+用法：
+
+//单行注释
+
+/*
+这是多行注释
+*/
+
+
+【gj.sc 输出】
+用法：
+
+// 可以输出数据
+gj.sc("1314")
+
+【rg 如果判断】
+用法：
+
+s a = 2
+rg a == 1
+{
+	gj.sc("等于1")
+}
+,a == 2
+{
+	gj.sc("等于2")
+}
+,
+{
+	gj.sc("等于其他")
+}
+
+支持运算符（返回 是 与 否）：
+== 是否对等
+!= 是否不等于
+>= 是否大于或等于
+<= 是否小于或等于
+> 是否大于
+< 是否小于
+?* 字符串开通是否相同
+*? 字符串结尾是否相同
+? 字符串是否被包含
+上面三个举例：
+s a = "abcdef"
+rg a ?* "abc" 返回“是”
+rg a *? "def" 返回“是”
+rg a ? "cde" 返回“是”
+
+支持逻辑运算符：
+|| 或者
+&& 并且
+
+
+【xh 循环】
+用法：
+//这将循环99次
+s a = 99
+// 单个表达式循环
+xh a > 0
+{
+gj.sc(a)
+a -= 1
+}
+
+// 循环扩展2
+s sz = { "a", "b", "c", "d" }
+// 2个表达式的循环
+xh s i, sz
+{
+gj.sc(i)
+}
+
+
+// 循环扩展3
+s a = 9
+// 3个表达式的循环
+xh s i=0, i<a, i++
+{
+gj.sc(i)
+}
+
+// tcxh 将直接跳出循环
+s a = 9
+// 3个表达式的循环
+xh s i=0, i<a, i++
+{
+  rg i>3{
+    tcxh
+  }
+gj.sc(i)
+}
+
+// tcbcxh 将直接跳出本次循环，并继续执行后面的循环
+s a = 9
+// 3个表达式的循环
+xh s i=0, i<a, i++
+{
+  rg i>3{
+    tcbcxh
+  }
+gj.sc(i)
+}
+
+说明：
+条件循环语句，比较值的变化，然后进行循环执行 { 代码 } 里面的代码。当条件为“否”的时候会停止循环，条件“是”的话，将一直循环执行。
+支持运算符（返回 是 与 否）：（跟 rg 语句 一样，请参考）
+
+【yc 异常】
+
+// 无异常日志
+yc{
+gj.sc("执行正常代码")
+
+},{
+
+gj.sc("如果发生异常，将被执行")
+
+}
+
+// 有异常日志
+yc{
+gj.sc("被执行代码")
+
+},(e){
+
+gj.sc("如果被执行代码发生异常，将被执行；异常日志:" + e)
+
+}
+
+说明：
+常用于可能发生异常代码的执行，其中的代码如果发生了异常不会造成应用崩溃。
+
+【st.*() 获取视图控件】
+用法：
+
+//如，获取文本控件对象
+// 输入控件的ID
+s wb = st.wb(zy.id.wb1)
+gj.sc(wb)
+
+
+s wb2 = st.wb(zy.id.wb2)
+// 获取控件的原对象 返回 TextView类型
+gj.sc(wb2.st)
+
+// 获取文本控件的文本字符
+gj.sc(wb2.zf())
+
+
+// 设置文本控件的文本字符
+wb2.zf("ni hao ma?")
+
+// 其他所有控件获取方法是一样的，获取的对象 子方法可能有差别。
+
+// 获取线性布局对象
+// 输入控件的ID
+s xxbj = st.xxbj(zy.id.xxbj1)
+gj.sc(xxbj)
+
+
+// 获取视图对象，获取的是View对象
+// 获取wb1视图对象
+s wb1 = st.st(zy.id.wb1)
+
+// 根据 xxbj1对象来获取其中的 wb2 的视图对象
+s xxbj1 = st.st(zy.id.xxbj1)
+s wb2 = st.st(xxbj1, zy.id.wb2)
+
+
+// 目前大部分的视图对象的 子方法 和 相关的动态设置事件 都还未开放；
+
+
+【gj.xc 新线程】
+用法：
+gj.xc()
+{
+	gj.sc("新线程里执行代码")
+}
+
+说明：
+启用新线程，去执行一些需要执行很久的代码。比如把下载文件，获取网页源码，大量的文件操作，可以放入新线里执行。这里线程的概念，启用新的线程帮你处理代码，这样不会影响到主线程。
+
+
+【gj.jmxc 界面线程上运行】
+用法：
+// 对应V3.0 线程更新界面
+
+gj.jmxc()
+{
+	gj.sc("界面线程上运行代码")
+}
+
+
+
+// 界面线程 上对视图进行操作
+
+// 启用一个新线程
+gj.xc()
+{
+// 这里可以执行耗时间的数据处理
+
+// 然后需要更新视图控件时，需要在界面线程上面执行，否则将报错
+gj.jmxc()
+{
+  s wb2 = st.wb(zy.id.wb2)
+  // 设置文本控件的文本字符
+  wb2.zf("ni hao ma?")
+}
+
+}
+
+
+说明：
+在启用新线程去执行代码时，是不允许直接对视图进行更新。视图控件需要在界面线程上更新，否则将报错；
+
+【st.sj 事件重置】
+
+
+【gj.ts 提示】
+用法：
+
+// 该方法需要手机开放应用的通知权限
+
+// 第一个参数为 需要被提示的内容
+gj.ts("你好")
+
+// 或 第二个参数为显示时长 1代表正常，2代表短暂
+gj.ts("你好", 1)
+
+
+【wj.cz 文件是否存在】
+用法：
+// 文件是否存在
+s a = "%abc.zip"
+s b = wj.cz(a)
+
+// 文件夹是否存在
+s a = "%abc"
+s b = wj.cz(a)
+
+//返回 true 或 false
+gj.sc(b)
+
+【wj.sc 删除文件】
+用法：
+// 删除文件
+s a = "%abc.zip"
+s b = wj.sc(a)
+
+// 文件夹删除，并删除子文件夹
+s a = "%abc"
+s b = wj.sc(a, true)
+
+//返回 删除文件的数量
+gj.sc(b)
+
+【wj.dx 文件大小】
+用法：
+s a = "%abc.zip"
+s b = wj.dx(a)
+
+//返回 文件 或 文件夹 的大小
+gj.sc(b)
+
+【wj.dqwb 读取文本】
+用法：(将读取SD卡根目录的abc.txt文件里面的内容)
+s a = "%abc.txt"
+s c = wj.dqwb(a)
+
+s a = "%abc.txt"
+s b = "utf-8"
+s c = wj.dqwb(a, b)
+
+//返回 文本文件 的内容
+gj.sc(b)
+
+【wj.xrwb 写入文本】
+用法：(将文本数据写入至SD卡根目录的abc.txt文件里面)
+s a = "%abc.txt"
+s b = "我是一个txt文件的内容"
+s d = wj.xrwb(a, b)
+
+s a = "%abc.txt"
+s b = "我是一个txt文件的内容"
+s c = "utf-8"
+s d = wj.xrwb(a, b, c)
+
+//返回 true 或 false
+gj.sc(d)
+
+
+【wj.fz 复制文件】
+用法：
+s a = "%abc.txt"
+s b = "%abc2.txt"
+s d = wj.fz(a, b)
+
+//设置重复不覆盖
+s c = false
+s d = wj.fz(a, b, c)
+
+//返回 true 或 false
+gj.sc(d)
+
+
+【wj.lb 文件夹与文件列表】
+用法：
+
+// 注意 lb l是字母L的小写， 为拼音首字母 lb=列表
+
+s a = "%dir"
+
+//获取文件夹与文件列表
+s b = wj.lb(a)
+// 循环数组
+xh s c, b
+{
+  gj.sc(c)
+}
+
+//仅获取文件夹列表
+s a = "%dir"
+s b = wj.lb(a, true)
+// 循环数组
+xh s c, b
+{
+  gj.sc(c)
+}
+
+//仅获取文件列表
+s a = "%dir"
+s b = wj.lb(a, true)
+// 循环数组
+xh s c, b
+{
+  gj.sc(c)
+}
+
+【wj.zy 转移文件】
+用法：
+s a = "%abc.txt"
+s b = "%abc2.txt"
+s d = wj.zy(a, b)
+
+//设置重复不覆盖
+s c = false
+s d = wj.zy(a, b, c)
+
+//返回 true 或 false
+gj.sc(d)
+
+
+【wj.hqml 获取目录路径】
+用法：
+
+s a = "%dir"
+s d = wj.hqml(a)
+
+//返回 绝对路径
+gj.sc(d)
+
+【wj.jy 解压zip文件】
+用法：
+
+// 目标ZIP
+s a = "%a.zip"
+// 只解压部分文件
+s b = "%b.txt"
+// 解压到指定目录
+s c = "%dir"
+// 重复是否覆盖
+s d = true
+
+// 解压指定部分文件文件，并指定重复覆盖
+s e = wj.jy(a, b, c, d)
+
+//返回 解压文件数量
+gj.sc(e)
+
+// 解压文件，并指定重复覆盖
+s e = wj.jy(a, c, d)
+//返回 解压文件数量
+gj.sc(e)
+
+// 解压文件，重复不覆盖
+s e = wj.jy(a, c)
+//返回 解压文件数量
+gj.sc(e)
+
+
+【wj.ys 压缩zip文件】
+用法：
+
+// 目标文件夹路径
+s a = "%dir"
+
+// 压缩到ZIP的路径
+s b = "%a.zip"
+
+// 解压文件，重复不覆盖
+s d = wj.ys(a, b)
+
+//返回 压缩的文件数量
+gj.sc(d)
+
+
+【wj.dk 打开文件】
+用法：
+s a = "%abc.apk"
+wj.dk(a)
+
+//无返回
+
+【wj.lx 文件类型】
+用法：
+s a = "%abc"
+s b = wj.lx(a)
+
+//返回一个整数，1为文件  2为文件夹  -1为不存在
+
+
+【zf.th 替换字符】
+用法：
+
+s a = "123456789"
+s b = "2"
+s c = "0"
+s d = zf.th(a, b, c)
+
+//返回 替换后的字符
+gj.sc(d)
+
+//支持正则表达式
+s d = zf.th(a, b, c, true)
+
+【zf.qc 取出字符】
+用法：
+
+s a = "123456789"
+s b = "23"
+s c = "78"
+s d = zf.qc(a, b, c)
+
+//返回 取出后的字符
+gj.sc(d)
+
+s b = 2
+s c = 6
+s d = zf.qc(a, b, c)
+
+//返回 取出后的字符
+gj.sc(d)
+
+
+【zf.fg 分割字符】
+用法：
+
+s a = "12,34,56,789"
+s b = ","
+s d = zf.fg(a, b)
+
+// 循环数组
+xh s e, d
+{
+  gj.sc(e)
+}
+
+// 支持正则表达式
+s d2 = zf.fg(a, b, true)
+
+【zf.cx 从头查询字符位置】
+用法：
+
+s a = "123456789"
+s b = "56"
+s d = zf.cx(a, b)
+
+//返回 查询的字符位置
+gj.sc(d)
+
+s c = 2
+s d = zf.cx(a, b, c)
+
+//返回 查询的字符位置
+gj.sc(d)
+
+
+【zf.dcx 从尾倒查询字符位置】
+用法：
+
+s a = "123456789"
+s b = "56"
+s d = zf.dcx(a, b)
+
+//返回 查询的字符位置
+gj.sc(d)
+
+s c = 2
+s d = zf.dcx(a, b, c)
+
+//返回 查询的字符位置
+gj.sc(d)
+
+
+【zf.cd 获取字符长度】
+用法：
+
+s a = "123456789"
+s d = zf.cd(a)
+
+//返回 字符的长度
+gj.sc(d)
+
+【zf.qctwkg 去除头尾空格】
+用法：
+
+s a = "  123456789 "
+s d = zf.qctwkg(a)
+
+//返回 字符的将去除头尾空格
+gj.sc(d)
+
+
+【zf.zhxx 转换为小写】
+用法：
+
+s a = "aBcDefGh"
+s d = zf.zhxx(a)
+
+//返回 字符的将转换为小写
+gj.sc(d)
+
+
+【zf.zhdx 转换为大写】
+用法：
+
+s a = "aBcDefGh"
+s d = zf.zhdx(a)
+
+//返回 字符的将转换为大写
+gj.sc(d)
+
+
+【zf.sjs 生产范围随机数】
+用法：
+
+s a = 1000
+s b = 9999
+s d = zf.sjs(a, b)
+
+gj.sc(d)
+
+
+【gj.zt 暂停代码】
+// 创建线程
+gj.xc(){
+
+// gj.zt(以毫秒为单位，1秒=1000毫秒)
+gj.zt(1000)
+gj.sc("1秒后")
+
+gj.zt(3000)
+gj.sc("3秒后")
+
+}
+
+【数组】
+用法：
+s sz = { "a", "b", "c", "d" }
+s sz2 = { 1, 2, 3, 4 }
+
+// 循环数组
+xh s e, sz
+{
+  gj.sc(e)
+}
+
+// 访问指定维度
+s a = sz[0]
+gj.sc(a)
+
+// 获取数据长度
+s d = sz.length
+gj.sc(d)
+
+
+【wl.hq 获取网页源码】
+用法：
+
+// 需要注意的是 wl.hq 需要放入线程中执行；
+
+// 创建线程
+gj.xc(){
+
+// 网址
+s a = "https://m.baidu.com"
+
+// post提交的数据，对应name1=value1&name2=value2，这个参数可以设置 null 则为 get方式
+s b = { "name1=value1", "name2=value2" }
+
+// 编码
+s c = "utf-8"
+
+// 传递cookie项值，格式为nama=value 下例： uid=112;name=nihao;sb=123456789;
+s d = "uid=112;name=nihao;sb=123456789;"
+
+// 带自动设置cookie方式获取网页，并记录当前网页的Cookie
+s e = true
+
+// 设置Header头:（可设置多条，以“||”隔开）文件头包括了Cookie，User-Agent设备型号
+s f = "User-Agent=Mozilla/5.0 (iPad; U; CPU OS 6_0 like Mac OS X; zh-CN; iPad2)||accept=*/*||accept-language=zh-CN"
+
+// get方式：网址，编码
+s st2 = wl.hq(a, c)
+
+// post方式：网址，数据，编码
+s st3 = wl.hq(a, b, c)
+
+// post方式：网址，数据，编码，传递cookie
+s st4 = wl.hq(a, b, c, d)
+
+// post方式：网址，数据，编码，传递cookie, 是否自动设置cookie，设置Header头
+s st5 = wl.hq(a, b, c, d, e, f)
+
+// post方式：网址，数据，编码，传递cookie, 是否自动设置cookie，设置Header头，设置连接超时，设置接收超时，设置代理IP
+s st5 = wl.hq(a, b, c, d, e, f, 20000, 20000, "10.0.0.172:80")
+
+//返回 网页源码
+gj.sc(st2)
+
+}
+
+
+【wl.xz 下载文件】
+用法：
+
+// 创建线程
+gj.xc(){
+
+s a = "https://m.baidu.com/static/index/plus/plus_logo.png"
+s b = "%plus_logo.png"
+s d = wl.xz(a, b)
+
+//返回 下载状态码，0为下载成功，1为下载已重复，-1为下载失败
+gj.sc(d)
+
+}
+
+【wl.fw 访问网页】
+用法：
+s a = "https://m.baidu.com"
+wl.xz(a)
+
+
+【gj.tz 跳转界面】
+用法：
+// 跳转 abc.iyu 界面
+gj.tz("abc")
+
+// 或
+gj.tz(abc.lei)
+
+
+//或 根据包名+类名 跳转 com.iapp.abc 界面，访问 com.iapp 包的 abc.iyu 界面
+gj.tz("com.iapp.abc")
+
+
+// 跳转 abc 界面，并携带数据，数据为2个数组；要求相互对应 name : value 数据是对应的，包括长度也需要一样（如它们同样都是3个）；
+s name = { "name1", "name2", "name3" }
+s value = { "value1", "value2", "value3" }
+gj.tz("abc", name, value)
+
+
+Bundle bundle = 自定义一个 Bundle
+gj.tz("abc", bundle)
+
+
+【sj.hqtz 获取跳转的数据】
+用法：
+// 当跳转界面后，可以再跳转后的界面进行获取相关数据
+
+// 根据 name 来获取它的值
+s name1 = sj.hqtz("name1")
+gj.sc(name1)
+
+
+// 直接获取 Bundle
+s bundle = sj.hqtz()
+gj.sc(bundle)
+
+
+【gj.tc 弹窗界面】
+用法：
+s tb = zy.t.i
+s bt = "标题"
+s nr = "内容"
+s an1 = "按钮1"
+s an2 = "按钮2"
+s an3 = "按钮3"
+
+
+// 无按钮
+s tc1 = gj.tc(bt, nr)
+
+// 有图标 无按钮
+s tc2 = gj.tc(tb, bt, nr)
+
+// 有图标 1个按钮
+s tc2 = gj.tc(tb, bt, nr, an1){
+
+gj.sc("按钮1")
+
+}
+
+
+// 有图标 2个按钮
+s tc2 = gj.tc(tb, bt, nr, an1, an2){
+
+gj.sc("按钮1")
+
+}, {
+
+gj.sc("按钮2")
+
+}
+
+// 有图标 3个按钮
+s tc2 = gj.tc(tb, bt, nr, an1, an2, an3){
+
+gj.sc("按钮1")
+
+}, {
+
+gj.sc("按钮2")
+
+}, {
+
+gj.sc("按钮3")
+
+}
+
+// 变量 nr 可输入布局视图
+// 弹窗返回对象类型 AlertDialog , 可调用方法关闭弹窗
+
+// 关闭指定的弹窗
+tc2.dismiss()
+
+
+【gj.gb 关闭界面】
+用法：
+
+// 关闭当前界面
+gj.gb()
+
+
+【gj.xszm 显示桌面】
+用法：
+
+// 显示桌面
+gj.xszm()
+
+
+【gj.mtbf 媒体播放】
+用法：
+
+// 输入媒体数据源
+// 本地媒体，支持格式 3gp,mp3,mp4,mkv,wav,ogg,ts,aac
+s mt = gj.mtbf("%abc.mp3")
+
+// 网络媒体，支持协议 http / https / rtsp
+s mt2 = gj.mtbf("http://www.abc.com/abc.mp3")
+
+// 带回调的方法
+s mt = gj.mtbf("%abc.mp3"){
+// 播放结束后调用
+
+}
+
+// 开始播放
+mt.ks()
+
+// 暂停
+mt.zt()
+
+// 停止
+mt.tz()
+
+// 释放资源
+mt.sf()
+
+// 当前播放状态，返回整数型 1正在播放，0没有播放，-1获取失败
+s bfzt = mt.bfzt()
+
+// 获取媒体的时长（毫秒）
+s mtsc = mt.mtsc()
+
+// 获取当前播放位置（毫秒）
+s bfwz = mt.bfwz()
+
+// 重播
+mt.cb()
+
+// 指定播放的位置（毫秒）
+// 1分钟后
+s tz = 60000
+mt.zdbfwz(tz)
+
+// 播放器的音量（0-100），左声道与右声道
+mt.bfyl(100, 100)
+
+// 设置是否循环播放
+mt.xhbf(true)
+
+// 设置播放完毕后自动释放资源
+mt.zdsf()
+
+【gj.ftz 发送通知】
+用法：
+s tsbt = "提示标题"
+s bt = "标题"
+s test = "内容"
+s icon = zy.t.i
+s iyu = "abc"
+
+// 无附带参数
+gj.ftz(tsbt, bt, test, icon, iyu)
+
+// 布局
+s layout = null
+
+// 附带参数
+s name = { "name1", "name2", "name3" }
+s value = { "value1", "value2", "value3" }
+gj.ftz(tsbt, bt, test, icon, layout, iyu, name, value)
+
+// 注意，需要给予应用通知权限，否则无效
+
+【st.xfc 悬浮窗】
+用法：
+s v = 视图控件
+s k = 200
+s g = 200
+s x = 100
+s y = 100
+
+// 创建并显示悬浮窗
+s xfc = st.xfc(v, k, g, x, y)
+
+// 设置视图显示位置
+xfc.xy(x, y)
+
+// 设置视图大小
+xfc.kg(k, g)
+
+// 设置是否相应事件
+xfc.xysj(true)
+
+// 移除视图，可用于暂时隐藏悬浮视图
+xfc.yc()
+
+// 添加视图，隐藏后需要再显示就添加回来
+xfc.tj()
+
+// 更新，在对悬浮窗的位置、大小等操作后，需要调用更新。
+xfc.gx()
+
+// 注意，需要给予应用权限，否则无法显示
+
+
+【列表适配器的操作】
+用法：
+
+// 获取列表控件
+s lb = st.lb(10087)
+
+// 获取列表适配器
+// 输入界面对象（item.iyu），输入布局资源
+s lbspq = lb.lbspq(item.lei, zy.b.csjm)
+
+// 这里是 界面 item.iyu 上面的2个控件的ID
+s ids = { zy.i.wb1, zy.i.wb2 }
+// 对应设置显示的数据值
+s values = { "小明", "18岁" }
+// 添加到列表中
+lbspq.tj(ids, values)
+
+// 对列表适配器中数据修改后，记得刷新数据
+lbspq.sx()
+
+// 删除指定位置的数据
+s sc = lbspq.sc(0)
+
+// 删除所有数据
+lbspq.sc()
+
+// 获取指定位置的数据
+s hq = lbspq.hq(0)
+
+// 获取指定位置的指定ID的数据
+s hq2 = lbspq.hq(0, zy.i.wb2)
+
+// 设置指定位置的数据对象
+lbspq.sz(0, hq)
+
+// 设置指定位置的指定ID的数据
+lbspq.sz(0, zy.i.wb2, "18岁")
+
+// 获取适配器中数据项目的数量
+s cd = lbspq.cd()
+
+// 其中列表的项目所用的布局是界面 item.iyu 上面的布局，并且布局控件可以设置事件。
+
+// 在其事件中获取相关列表适配器数据
+
+// 如 item.iyu界面中 ID zy.i.wb1 的控件 的 单击触屏事件 获取 列表适配器数据
+
+
+
+// 列表数据操作
+s lb2 = sj.lb(vw)
+
+// 获取列表适配器
+s lbsqp = lb2.lbspq()
+
+// 获取触发控件的位置
+s lbcfwz = lb2.lbcfwz()
+
+// 获取触发控件的数据对象
+s lbcfsj = lb2.lbcfsj()
+
+// 获取指定ID的对应数据，获取结果 小明
+s lbcfsj2 = lb2.lbcfsj(zy.i.wb1)
+
+// 获取指定位置 和 指定ID的对应数据，获取结果 小明
+s lbsj1 = lb2.lbsj(0, zy.i.wb1)
+
+// 获取指定位置数据对象
+s lbsj2 = lb2.lbsj(0)
+
+// 获取列表数据对象
+s lbsj3 = lb2.lbsj()
+
+// 获取项目根视图控件
+s lbxmst = lb2.lbxmst()
+
+
+【xt.fsdx 发送短信】
+用法：
+s a = "10086"
+s b = "0"
+xt.fsdx(a, b)
+
+注意:测试时只显示syso日志，不直接 发送短信，打包即可。
+
+【xt.bddh 拨打电话】
+用法：
+s a = "10086"
+xt.bddh(a)
+
+注意:测试时只显示syso日志，不直接 拨出号码，打包即可。
+
+【xt.sj 当前时间】
+用法：
+s a = 0
+s b = xt.sj(a)
+gj.sc(b)
+
+说明：
+第一个参数为时间类型，第二个赋值变量
+
+[数字类型]
+0：2014-07-07 09:10:08
+1：2014/07/07 09:10:08
+2：2014-07-07
+3：09:10:08
+4：18144133553151
+5：2014年07月07日 09:10:08
+[字符类型，输入字符形式需引号概括]
+Y 年
+m 月
+d 日
+H 时
+M 分
+S 秒
+a/A 星期几
+
+【获取屏幕相关分辨率】
+
+用法：
+
+//获取屏幕宽度
+s k = xt.pm().k
+//获取屏幕高度
+s g = xt.pm().g
+
+//获取顶部状态栏高度
+s ztl = xt.pm().ztl
+
+// 状态栏 false为隐藏 true为显示
+xt.pm().ztl(false)
+
+//获取底部虚拟按键高度
+s xnaj = xt.pm().xnaj
+
+// 底部虚拟按键 false为隐藏 true为显示
+xt.pm().xnaj(false)
+
+// 设置屏幕 false为竖屏 true为横屏
+xt.pm().hsp(true)
+
+// 设置屏幕亮度 1 - 100
+xt.pm().ld(50)
+
+【xt.dkyy 打开App应用】
+用法：
+xt.dkyy("com.iapp")
+
+//或 带有指定类名的启动
+xt.dkyy("com.iapp", "com.iapp.MakeiApp")
+
+【xt.yylb 获取App列表】
+用法：
+// 输入获取是否包含系统应用
+s[] sz = xt.yylb(false)
+xh s app, sz
+{
+// 包名
+gj.sc(app.bm)
+
+// 图标
+gj.sc(app.tb)
+
+// 标题
+gj.sc(app.bt)
+
+// 版本
+gj.sc(app.bb)
+
+// 版本号
+gj.sc(app.bbh)
+}
+
+
+【xt.xzyy 卸载应用】
+用法：
+xt.xzyy("com.iapp")
+
+说明：
+输入应用包名
+
+【wl.scwj 上传文件】
+用法：
+s a = "http://abc.com/upfile.php"
+s b = { "filename=iApp我的应用.apk", "test=非常好的应用哦" }
+s c = { "%abc/iApp.apk", "%abc/iApp2.apk" }
+s d = "utf-8"
+
+// 上传文件
+s e = wl.scwj(a, b, c, d)
+
+
+//设置 header文件头，文件头包括了Cookie，User-Agent设备型号。。
+s f = "User-Agent=Mozilla/5.0 (iPad; U; CPU OS 6_0 like Mac OS X; zh-CN; iPad2)||Cookie=aa:123;bb:456;||accept-language=zh-CN"
+s g = wl.scwj(a, b, c, d, f)
+
+【动态创建控件】
+用法：
+// 创建文本控件
+wb wb = st.wb()
+// 设置ID 也可以不设置ID
+wb.id(10087)
+// 设置宽高 -1为最大，-2为自适应
+wb.kg(-2, -2)
+// 其他的设置
+wb.zf("你好")
+
+// 获取一个显示的布局控件作为父控件
+xxbj xxbj = st.xxbj(zy.i.xxbj1)
+
+// 添加控件
+xxbj.j(wb)
+
+
+// 删除子视图
+s a = xxbj.sc(wb)
+
+// 删除全部子视图
+s b = xxbj.scqb(wb)
+
+// 获取子视图对象列表
+s[] c = xxbj.zlb()
+
+// 获取从父控件中获取指定视图
+s d = st.wb(zy.i.xxbj1, 10087)
+
+// 获取控件原对象
+xxbj xxbj = st.xxbj(zy.i.xxbj1)
+s e = xxbj.st
+
+// 获取控件原View对象
+s e2 = st.st(zy.i.xxbj1)
+
+// 获取控件原View对象，输入父控件ID或对象，输入要获取的控件ID
+s e2 = st.st(zy.i.xxbj1, 10087)
+
+【gj.txcl 图像处理】
+用法：
+s t = gj.txcl("%1.jpg")
+
+// 是否开启编辑图像后更新对象；true时如你对图像进行了裁剪，再次裁剪则以上次裁剪的基础进行继续裁剪。以及裁剪后可直接保存图像；false时图像编辑后，再次编辑还是以原始图像状态进行编辑。
+t.gxtx(true)
+
+// 获取图像大小
+// 图像的宽
+s k = t.k
+// 图像的高
+s g = t.g
+
+// 裁剪图像区域（像素）：x坐标:80，y坐标:90，裁剪宽度:50，裁剪高度:60
+s a = t.cj(80, 90, 50, 60)
+
+// 旋转图像，负值为逆时针旋转，正值为顺时针旋转
+s b = t.xz(180)
+
+// 缩放图像，值小于1 则为缩小，否则为放大
+s c = t.sf(0.5)
+
+// 缩放图像，输入指定的宽高进行缩放
+s c2 = t.sf(100, 200)
+
+// 图像反转，0为水平反转，1为垂直反转
+s d = t.fz(1)
+
+// 保存图像
+s e = t.bc("%1.jpg")
+
+// 保存图像，并指定图像质量(1-100)
+s e2 = t.bc("%1.jpg", 100)
+
+
+// 输入指定的图像对象进行保存
+s t2 = gj.txcl("%1.jpg")
+s a2 = t2.cj(80, 90, 50, 60)
+// 输入图像对象，保存的路径，指定图像质量(1-100)
+s e3 = t2.bc(a2, "%1.jpg", 100)
+
+
+【xt.jqbxr 剪切板写入文本】
+用法：
+s a = "nihao"
+xt.jqbxr(a)
+
+说明：
+可用于复制到剪切板，其他应用可获取到此数据。
+
+【xt.jqbhq 剪切板获取文本】
+用法：
+s a = xt.jqbhq()
+gj.sc(a)
+
+说明：
+可获取剪切板数据，得到其他地方写入的剪切板数据。
+
+【xt.sjxm 手机休眠】
+用法：
+
+// 设置为不休眠
+xt.sjxm(false)
+
+说明：
+设置后手机将不休眠，不锁屏。默认为 true 需要休眠。注意需要权限 android.permission.WAKE_LOCK
+
+【视频播放】
+用法：
+
+// 获取视频控件
+s sp1 = st.sp(zy.id.sp1)
+
+// 输入媒体数据源 3gp、MP4、avi
+s mt = sp1.zrsp("%abc.mp4")
+
+// 网络媒体，支持协议 http / https / rtsp
+s mt2 = sp1.zrsp("http://www.abc.com/abc.mp4")
+
+// 带回调的方法
+s mt = sp1.zrsp("%abc.mp4"){
+// 播放结束后调用
+
+}
+
+// 播放
+mt.bf()
+
+// 暂停
+mt.zt()
+
+// 恢复
+mt.hf()
+
+// 停止
+mt.tz()
+
+// 当前播放状态，返回整数型 1正在播放，0没有播放，-1获取失败
+s bfzt = mt.bfzt()
+
+// 获取媒体的时长（毫秒）
+s mtsc = mt.mtsc()
+
+// 获取当前播放位置（毫秒）
+s bfwz = mt.bfwz()
+
+// 指定播放的位置（毫秒）
+// 1分钟后
+s tz = 60000
+mt.zdbfwz(tz)
+
+
+【加载界面】
+用法：
+
+// 获取一个线性布局
+s xxbj = st.xxbj(zy.i.xxbj1)
+
+// 设置要被加载的界面 与 界面的布局资源，值为数组可传入多个
+s[] iyus = { item.lei }
+s[] iyuzy = { zy.b.csjm }
+
+// 添加
+xxbj.jm(iyus, iyuzy)
+
+
+// 滑动窗体与 侧滑窗体 使用方法是一样的
+s[] iyus = { item.lei, item2.lei, item3.lei }
+s[] iyuzy = { zy.b.csjm, zy.b.csjm2, zy.b.csjm3 }
+
+// 添加
+xxbj.jm(iyus, iyuzy)
+
+
+【数据转换】
+用法：
+
+s a = 123
+s b = 123.12
+s c = "abc"
+
+// 转换为字符串
+s zfc = sj.zh(b).zstring()
+
+// 转为布尔型
+s brx = sj.zh(b).zboolean()
+
+// 转为布尔型，如果转换失败设置结果为false
+s brx2 = sj.zh(b).zboolean(false)
+
+// 转为整数
+s zsx = sj.zh(b).zint()
+s zsx2 = sj.zh(b).zlong()
+
+// 转为整数，如果转换失败设置结果为0
+s zsx3 = sj.zh(b).zint(0)
+s zsx4 = sj.zh(b).zlong(0)
+
+// 转为浮点型
+s fdx = sj.zh(b).zfloat()
+s fdx2 = sj.zh(b).zdouble()
+
+// 转为浮点型，如果转换失败设置结果为0
+s fdx3 = sj.zh(b).zfloat(0)
+s fdx4 = sj.zh(b).zdouble(0)
+
+// dip转换px
+s px = sj.zh(a).dpzpx()
+
+// px转换dip
+s px = sj.zh(a).pxzdp()
+
+// px转换sp
+s px = sj.zh(a).pxzsp()
+
+// sp转换px
+s px = sj.zh(a).spzpx()
+
+// 获取数据类型
+s lx = sj.zh(c).lei()
+
+【设备信息】
+用法：
+
+// 设备SDK
+s sdk = xt.sbxx().sdk
+
+// 设备版本
+s bb = xt.sbxx().bb
+
+// 设备品牌
+s pp = xt.sbxx().pp
+
+// 设备型号
+s xh = xt.sbxx().xh
+
+// 设备cpu型号
+s cpuxh = xt.sbxx().cpuxh()
+
+// 设备cpu频率
+s cpupl = xt.sbxx().cpupl()
+
+// 设备cpu类型
+s cpulx = xt.sbxx().cpulx()
+
+// 设备imei，需要权限 android.permission.READ_PHONE_STATE
+s cpulx = xt.sbxx().imei()
+
+// 设备imsi，需要权限 android.permission.READ_PHONE_STATE
+s cpulx = xt.sbxx().imsi()
+
+【xt.ycxnjp 强制隐藏虚拟键盘】
+用法：
+
+// 隐藏虚拟键盘
+xt.ycxnjp()
+
+
+【wl.xzgl 下载管理】
+用法：
+s a = "%down/temp"
+s b = "%down/save"
+
+//并发线程上限数量（-1为默认，1为单任务，N为多任务）线程数量过多可能造成卡顿
+s c = -1
+
+s d = 25000
+s e = false
+
+// 输入文件保存路径
+s xzgl = wl.xzgl(b){
+
+gj.sc("每个项目下载后都会调用")
+}
+
+// 输入临时文件路径，文件保存路径
+s xzgl = wl.xzgl(a, b){
+
+gj.sc("每个项目下载后都会调用")
+}
+
+// 输入临时文件路径，文件保存路径，并发线程上限数量，超时，是否覆盖重复
+s xzgl = wl.xzgl(a, b, c, d, e)(ii, dt, dr){
+
+gj.sc("每个项目下载后都会调用")
+
+// 获取相关数据
+
+// ii 下载项目序号
+// dt 下载项目对象
+// dr 下载管理器
+
+// 下载文件的字节大小
+s dx = dt.dx
+
+// 已下载字节数
+s yxz = dt.yxz
+
+// 下载项目标题
+s bt = dt.bt
+
+// 网址
+s wz = dt.wz
+
+// 文件路径
+s wjlj = dt.wjlj
+
+// 自定义数据
+s sj2 = dt.sj
+
+// 获取状态，0为还未开始，1正在运行，2已完成
+s zt = dt.zt()
+
+}
+
+
+
+// 重设置目录
+xzgl.ml(a, b)
+
+
+s f = "http://abc.com/1.jpg"
+
+// 添加下载项目
+// 输入网址
+xzgl.j(f)
+
+// 输入网址，自定义数据
+xzgl.j(f, "自定义数据")
+
+// 输入网址，保存的路径，自定义数据
+xzgl.j(f, "%abc1.jpg", "自定义数据")
+
+// 输入网址，保存的路径，项目标题，自定义数据
+xzgl.j(f, "%abc1.jpg", "name", "自定义数据")
+
+// 获取下载列表
+s lb = xzgl.lb
+
+
+【zf.zzbds 正则表达式】
+用法：
+
+//字符串
+s a = "qqqq123456eee"
+//正则表达式
+s b = "([a-z]+)(\\d+)"
+//更多参数
+s c = 0
+
+// 获取正则表达式对象
+s zz = zf.zzbds(a, b, c)
+
+//替换成，将替换全部
+s e = zz.thqb("1:$1, 2:$2")
+
+//替换成，只替换第一个
+s e2 = zz.thyg("1:$1, 2:$2")
+
+//返回是否匹配成功，需字符串被完全匹配，赋值返回true或 false
+s e3 = zz.sfppcg()
+
+//开始匹配 或 匹配下一个，赋值返回true或 false
+s e4 = zz.pp()
+
+//给定位置序号进行匹配，赋值返回true或 false
+s e5 = zz.pp(1)
+
+//获取匹配组的数量，当前为2组：([a-z]+)、(\d+)
+s e6 = zz.ppzsl()
+
+//获取第1组匹配到的子字符串在字符串中的开头位置 
+s e7 = zz.kswz(1)
+
+//获取第1组匹配到的子字符串在字符串中的结尾位置 
+s e8 = zz.jswz(1)
+
+//获取第1组匹配到的子字符串
+s e9 = zz.zf(1)
+//获取第2组匹配到的子字符串
+s e10 = zz.zf(2)
+
+【xt.gn 设备功能操作】
+用法：
+
+// 闪光灯 需要权限 android.permission.CAMERA
+
+// 闪光灯开启
+xt.gn().sgd()
+
+// 闪光灯停止
+xt.gn().sgdtz()
+
+
+// 振动 需要权限 android.permission.VIBRATE
+
+// 振动 1秒钟
+s zd1 = xt.gn().zd(1000)
+
+//静止1秒，震动1秒，静止1秒，震动1秒，静止1秒，震动1秒，静止1秒，..， 并且不重复
+//输入震动规则，输入是否重复循环执行
+s gz = { 1000, 2000, 3000, 4000 }
+s zd2 = xt.gn().zd(gz, false)
+
+//强制停止震动器
+xt.gn().zdtz()
+
+// 获取振动状态
+s zd3 = xt.gn().zd()
+
+
+// 录音
+s ly1 = xt.gn().ly("%1.amr")
+
+// 录音停止
+s ly2 = xt.gn().lytz()
+
+
+
+// 录制视频
+//输入储存录制文件路径，输入视频宽度，输入视频高度，输入视频码率，输入视频帧率
+xt.gn().lsp("%123.mp4", 1280, 720, 1024000, 30)
+
+//开始录制
+xt.gn().lspks()
+
+//停止录制
+xt.gn().lsptz()
+
+//释放资源
+xt.gn().lspsf()
+
+//判断是否正在录制
+xt.gn().zzlsp()
+
+说明：
+用于手机屏幕录制。
+
+注意：
+仅支持系统Android 5.0以及以上才有效果！
+Android 5.0以下的系统，无效果！
+
+
+
+// 截屏
+s jp1 = xt.gn().jp("%123.jpg", 70)
+
+
+// 调用拍摄相片，拍摄后会调用 界面事件》回调结果  方法第一个参数结果为 63930
+// 输入拍摄的相片保存位置
+xt.gn().psxp("%1.jpg")
+
+
+// 相册选择，选择后会调用 界面事件》回调结果  方法第一个参数结果为 63931
+// 需要通过 sj.hquri(it) 来获取结果
+xt.gn().xcxz()
+
+// 相册选择获取结果
+// 输入 界面事件》回调结果 方法的第三个参数
+s xcxz1 = sj.hquri(it)
+
+
+// 视频拍摄，拍摄后会调用 界面事件》回调结果  方法第一个参数结果为 63932
+// 需要通过 sj.hquri(it) 来获取结果
+xt.gn().spps()
+
+// 相册选择获取结果
+// 输入 界面事件》回调结果 方法的第三个参数
+s xcxz2 = sj.hquri(it)
+
+
+【sqlite 数据库操作】
+用法：
+//连接一个私有数据库，如果不存在将自动新建
+//输入数据库文件名
+s sjk = sj.sjk("iapp.db")
+
+
+//连接一个公共数据库，如果不存在将自动新建
+//输入数据库文件名
+s sjk2 = sj.sjk("%iapp.db")
+
+// 获取数据库对象
+s sjk3 = sjk.sjk
+
+// 获取数据库是否为新建的
+s sjk5 = sjk.xj
+
+// 删除数据库
+s sjk6 = sjk.scsjk()
+
+// 释放数据库
+s sjk7 = sjk.sfsjk()
+
+// 创建 info 数据表
+s table = "_id integer primary key,url text, filename text,status interger"
+s sjk8 = sjk.cjsjb("info", table)
+
+// 判断 info 数据表 是否存在
+s sjk9 = sjk.czsjb("info")
+
+// 删除 info 数据表
+s sjk10 = sjk.scsjb("info")
+
+
+//在 info 数据表 添加一条数据
+// 数据列名
+s table = "url,filename,status"
+// 对应数据
+s data = "'http://abc.com/abc.apk', 'abc.apk', 1"
+s sjk11 = sjk.cjsj("info", table, data)
+
+
+//在 info 数据表 更新数据，若不需要设置条件(status=2)可设为 null 视为适用于执行所以数据
+s sjk12 = sjk.gxsj("info", "status=2", "_id=1")
+
+
+//在 info 数据表 删除数据，若不需要设置条件(_id=1)可设为 null 视为适用于执行所以数据
+s sjk13 = sjk.scsj("info", "_id=1")
+
+
+//在 info 数据表 查询数据
+//查询，若不需要设置条件(status=1 order by _id desc LIMIT 0,1)可设为 null 视为适用于执行所以数据
+// LIMIT <跳过的数据数目>, <取数据数目>
+s table = "_id,url,filename,status"
+s sqlx = "status=1 order by _id desc LIMIT 0,1"
+s sjk15 = sjk.cxsj("info", table, sqlx)
+
+//自定义sql查询
+s sqlx = "select _id,url,filename,status from info where status=1 order by _id desc"
+s sjk16 = sjk.cxsj(sqlx)
+
+// 循环打印数据
+xh sjk15.xyh()
+{
+// 输出 第一列数据， 第二列数据
+gj.sc(":" + sjk15.sj(0)+ ", " + sjk15.sj(1));
+}
+
+// 更多操作
+
+//获取光标对象的第一列数据
+s sj1 = sjk15.sj(0)
+
+//获取光标对象有多少列
+s sj2 = sjk15.cxls()
+
+//获取总共查询到多少行数据
+s sj3 = sjk15.cxhs()
+
+//光标对象移到下一行数据
+s sj5 = sjk15.xyh()
+
+//光标对象移到上一行数据
+s sj6 = sjk15.syh()
+
+//光标对象移到第一行数据
+s sj7 = sjk15.dyh()
+
+//光标对象移到最后第一行数据
+s sj8 = sjk15.zhyh()
+
+//光标对象移到指定第3条数据
+s sj9 = sjk15.zdwz(2)
+
+//获取光标对象当前位置
+s sj10 = sjk15.hqwz()
+
+//释放数据查询
+s sj11 = sjk15.sf()
+
+
+
+//自定义的sql执行，需要对sql语法了解才能灵活运用
+s sqlx = "insert into info (url,filename,status) values ('http://abc.com/abc.apk', 'abc.apk', 1)"
+s sjk17 = sjk.cxsj(sqlx)
+
+
+注意：
+在执行sql语句的时候，需要注意你的字符串的特殊字符的转义。
+     /   ->    //
+     '   ->    ''
+     [   ->    /[
+     ]   ->    /]
+     %   ->    /%
+     &   ->    /&
+     _   ->    /_
+     (   ->    /(
+     )   ->    /)
+
+
+【动画操作】
+用法：
+
+// 创建动画对象
+s dh = gj.dh()
+
+// 渐变透明度动画，1 代表不透明，0代表透明；还可以设置0.5等半透明
+s jbtm = dh.jbtm(1, 0)
+// 持续时长
+jbtm.cxsc(2000)
+// 设置控件执行动画
+st.tx(zy.i.tx1).dh(jbtm)
+
+
+
+//创建一个渐变尺寸伸缩动画
+//0为没有，2.5为原始2.5倍
+s jbss = dh.jbss(0.5, 2.5, 0.5, 2.5)
+// 持续时长
+jbss.cxsc(2000)
+// 设置控件执行动画
+st.tx(zy.i.tx1).dh(jbss)
+
+位置类型：
+0 默认
+1 以对象本身为基准位置类型
+2 以父控件为基准位置类型
+
+//输入X开始尺寸比例，输入X结束尺寸比例，输入Y开始尺寸比例，输入Y结束尺寸比例，输入X位置类型，输入X坐标的开始位置，输入Y位置类型，输入Y坐标的开始位置
+s jbss2 = dh.jbss(0.5, 2.5, 0.5, 2.5, 1, 0.5, 1, 0.5)
+// 持续时长
+jbss2.cxsc(2000)
+// 设置控件执行动画
+st.tx(zy.i.tx1).dh(jbss2)
+
+
+
+//创建一个画面位置移动动画
+//输入开始X坐标上的移动位置，结束X坐标上的移动位置，开始Y坐标上的移动位置，结束Y坐标上的移动位置
+s wzyd = dh.wzyd(30, 80, 30, 80)
+// 持续时长
+wzyd.cxsc(2000)
+// 设置控件执行动画
+st.tx(zy.i.tx1).dh(wzyd)
+
+
+
+//创建一个画面旋转动画
+//输入动画开始的旋转角度，输入动画旋转到的角度
+s xz = dh.xz(0, 180)
+// 持续时长
+xz.cxsc(2000)
+// 设置控件执行动画
+st.tx(zy.i.tx1).dh(xz)
+
+位置类型：
+0 默认
+1 以对象本身为基准位置类型
+2 以父控件为基准位置类型
+
+//输入动画开始的旋转角度，输入动画旋转到的角度，输入X位置类型，输入X坐标的开始位置，输入Y位置类型，输入Y坐标的开始位置
+s xz = dh.xz(0, 180, 1, 0.5, 1, 0.5)
+// 持续时长
+xz.cxsc(2000)
+// 设置控件执行动画
+st.tx(zy.i.tx1).dh(xz)
+
+
+
+
+// 开始使用 动画集合
+s jh = dh.jh(false)
+
+// 渐变透明度动画
+s jbtm = dh.jbtm(1, 0)
+// 持续时长
+jbtm.cxsc(2000)
+jh.tj(jbtm)
+
+//渐变尺寸伸缩动画
+s jbss = dh.jbss(0.5, 2.5, 0.5, 2.5)
+// 持续时长
+jbss.cxsc(2000)
+jh.tj(jbss)
+
+//画面位置移动动画
+s wzyd = dh.wzyd(30, 80, 30, 80)
+// 持续时长
+wzyd.cxsc(2000)
+jh.tj(wzyd)
+
+//画面旋转动画
+s xz = dh.xz(0, 180)
+// 持续时长
+xz.cxsc(2000)
+jh.tj(xz)
+
+// 添加动画集合完毕后执行这个动画集合
+// 设置控件执行动画
+st.tx(zy.i.tx1).dh(jh)
+
+说明：
+常用于动画集合执行。
+
+提示：
+动画集合允许被其他动画集合添加成为子动画。
+
+提示：
+动画集合如果设置了动画控制属性，同时也会重置所有子控件的属性。
+
+
+
+
+
+// 开始使用 动画队列执行
+
+//旋转动画
+//输入控件ID或控件对象，输入动画类型，输入旋转角度...（可输入N个参数）
+s xz = dh.dl(zy.i.tx1, "rotation", 60, 180)
+//dh.dl(zy.i.tx1, "rotationX", 30, 80, 60, 20, 60)
+//dh.dl(zy.i.tx1, "rotationY", 30, 80)
+// 持续时长
+xz.cxsc(2000)
+// 开始
+xz.ks()
+
+
+//伸缩动画
+//输入控件ID或控件对象，输入动画类型，输入伸缩尺寸比例...（可输入N个参数）
+s ssdh = dh.dl(zy.i.tx1, "scaleX", 1.5, 2.5)
+//dh.dl(zy.i.tx1, "scaleY", 1.5, 2.5, 1.2, 2.6, 1.3)
+// 持续时长
+ssdh.cxsc(2000)
+// 开始
+ssdh.ks()
+
+
+//移动动画
+//输入控件ID或控件对象，输入动画类型，输入移动到位置...（可输入N个参数）
+s yddh = dh.dl(zy.i.tx1, "translationX", 0, 60)
+//dh.dl(zy.i.tx1, "translationY", 0, 60, 30, 10, 60)
+// 持续时长
+yddh.cxsc(2000)
+// 开始
+yddh.ks()
+
+
+
+//透明度
+//输入控件ID或控件对象，输入动画类型，可见度比例(0.0至1.0)...（可输入N个参数）
+s tm = dh.dl(zy.i.tx1, "alpha", 1, 0.3, 1, 0.2, 1)
+// 持续时长
+tm.cxsc(2000)
+// 开始
+tm.ks()
+
+
+
+// 开始使用 队列动画集合
+
+//旋转动画
+s xz = dh.dl(zy.i.tx1, "rotation", 60, 180)
+// 持续时长
+xz.cxsc(2000)
+
+//伸缩动画
+s ssdh = dh.dl(zy.i.tx1, "scaleX", 1.5, 2.5)
+// 持续时长
+ssdh.cxsc(2000)
+
+//移动动画
+s yddh = dh.dl(zy.i.tx1, "translationX", 0, 60)
+// 持续时长
+yddh.cxsc(2000)
+
+//透明度
+s tm = dh.dl(zy.i.tx1, "alpha", 1, 0.3, 1, 0.2, 1)
+// 持续时长
+tm.cxsc(2000)
+
+// 设置数组
+s sz = { xz, ssdh, ddh, tm }
+
+
+//队列顺序执行
+s dlsx = dh.dlsx(sz)
+
+//队列同时执行
+s dlts = dh.dlts(sz)
+//dlts.ks()
+
+// 开始执行动画
+dlsx.ks()
+
+说明：
+常用于动画集合执行。
+
+提示：
+队列动画集合允许被其他队列动画集合添加成为子动画。
+
+提示：
+动画集合如果设置了动画控制属性，同时也会重置所有子控件的属性。
+
+
+// 开始使用 动画控制
+
+// 位置移动动画
+s wzyd = dh.wzyd(30, 80, 30, 80)
+
+// 取消
+wzyd.qx()
+
+// 重置属性
+wzyd.cz()
+
+// 开始
+wzyd.ks()
+
+// 持续时长
+wzyd.cxsc(2000)
+
+// 延迟执行
+wzyd.yczx(1000)
+
+// 启用动画结束填充效果
+wzyd.qytc(true)
+
+// 动画执行后，控件停留执行结束状态
+wzyd.tljszt(true)
+
+// 动画执行后，控件停留执行开始状态
+wzyd.tlkszt(true)
+
+// 动画重复执行的次数
+wzyd.cfzx(6)
+
+// 动画集合添加动画，仅用于动画集合
+s jh = dh.jh(false)
+jh.tj(wzyd)
+
+// 动画监听事件
+jh.dhsj
+{
+//当结束动画时
+gj.sc("End")
+},
+{
+//当重复动画时
+gj.sc("Repeat")
+},
+{
+//当启动动画时
+gj.sc("Start")
+}
+
+
+// 旋转动画
+s xz = dh.dl(zy.i.tx1, "rotation", 60, 180)
+
+// 取消
+xz.qx()
+
+// 开始
+xz.ks()
+
+// 持续时长
+xz.cxsc(2000)
+
+// 延迟执行
+xz.yczx(1000)
+
+// 是否正在运行
+s zzyx = xz.zzyx()
+
+// 设置动画执行的控件
+xz.kj(zy.i.tx1)
+
+// 克隆动画
+s kl = xz.kl()
+
+
+// 动画监听事件
+xz.dhjtsj{
+//当结束动画时
+gj.sc("End")
+},
+{
+//当重复动画时
+gj.sc("Repeat")
+},
+{
+//当启动动画时
+gj.sc("Start")
+},
+{
+//当取消动画时
+gj.sc("Cancel")
+}
+
+
+
+// 开始使用 动画背景
+//创建动画背景
+//输入是否重复执行
+s dhbj = dh.dhbj(true)
+
+//添加元素
+//输入背景图像或图片变量或背景对象，输入显示时长
+dhbj.tj("@t1.png", 1000)
+dhbj.tj("%t2.png", 1000)
+dhbj.tj(zy.t.t3, 1000)
+
+//设为指定控件背景
+st.tx(zy.i.tx1).bj(dhbj)
+
+//开始动画
+dhbj.ks()
+
+//停止动画
+dhbj.tz()
+
+//是否在运行
+s zzyx = dhbj.zzyx()
+
+
+【zf.json json数据解析】
+用法：
+
+//解析json数据
+s text = "{\"id\":1, \"name\":\"xiaobai\", \"age\":16}"
+s jo = zf.json(text)
+
+// 获取根json对象
+s json = jo.json
+
+//获取id
+s id = jo.hq(json, "id")
+
+//获取name
+s name = jo.hq(json, "name")
+
+//获取age
+s age = jo.hq(json, "age")
+
+//修改age数据
+jo.sz(json, "age", 20)
+
+//删除id数据
+s sc = jo.sc(json, "id")
+
+//打印json数据
+s text = jo.json(json)
+
+
+
+//解析json列表数据
+s text = "{\"userlist\":[{\"id\":1, \"name\":\"niubi\", \"age\":16},{\"id\":2, \"name\":\"wangba\", \"age\":18},{\"id\":3, \"name\":\"goudan\", \"age\":17}]}"
+s jo = zf.json(text)
+
+// 获取根json对象
+s json = jo.json
+
+//获取json对象列表
+s list = jo.dxlb(json, "userlist")
+// 获取列表的长度
+s size = jo.cd(list)
+xh size > 0
+{
+size = size - 1
+s dx = jo.dx(list, size)
+
+//获取id
+s id = jo.hq(dx, "id")
+
+//获取name
+s name = jo.hq(dx, "name")
+
+//获取age
+s age = jo.hq(dx, "age")
+
+}
+
+【utb Toolbar工具栏设置】
+用法：
+
+//设置自定义的工具栏 为当前界面的工具栏
+//输入Toolbar工具栏的 控件id或控件对象
+s gjl = st.gjlbj(zy.i.gjlbj1).gjl()
+
+// 设置左按钮可用
+gjl.zanky(true)
+
+// 设置左按钮是否显示
+gjl.zanxs(true)
+
+// 设置左按钮为小箭头
+gjl.zanxjt(true)
+
+// 设置左按钮图像
+gjl.zantx("@t1.png")
+//gjl.zantx(zy.t.tp1)
+
+// 设置左按钮监听事件
+gjl.zanjtsj{
+gj.sc("左按钮监听事件")
+}
+
+// 设置右按钮图像，无事件。可使用界面菜单事件
+gjl.yantx("@t1.png")
+//gjl.yantx(zy.t.tp1)
+
+//显示或隐藏 自定义布局
+gjl.xszdybj(true)
+
+//显示或隐藏 标题
+gjl.xsbt(true)
+
+//获取高度
+s g = gjl.g()
+
+//设置显示选项
+gjl.xsxx(2)
+//获取显示选项
+s xsxx = gjl.xsxx()
+
+
+//设置自定义布局
+// 新建一个控件
+s wb1 = st.wb();
+wb1.kg(-1, -2);
+gjl.zdybj(wb1)
+//获取自定义布局
+s zdybj = gjl.zdybj()
+
+//设置标题
+gjl.bt("这是标题")
+//获取标题
+s bt = gjl.bt()
+
+//设置子标题
+gjl.zbt("这是子标题")
+//获取子标题
+s bt = gjl.zbt()
+
+
+【gj.tctx 弹窗提醒】
+用法：
+//无按钮弹出提醒
+//输入控件对象或ID，输入字符，输入显示时长（值0 -1 -2）
+gj.tctx(zy.i.xxbj1, "ni hao!", 0)
+
+
+//有按钮弹出提醒
+//输入控件对象可设置null，输入字符，输入显示时长（值0 -1 -2），输入按钮标题
+gj.tctx(zy.i.xxbj1, "ni hao ma?", 0, "OK")
+{
+gj.sc("go")
+}
+
+//有按钮弹出提醒
+//输入控件对象可设置null，输入字符，输入显示时长（值0 -1 -2），输入按钮标题，颜色
+gj.tctx(zy.i.xxbj1, "ni hao ma?", 0, "OK", "#000000")
+{
+gj.sc("go")
+}
+
+
+【滑动窗体控制】
+用法：
+
+// 获取滑动窗体
+s hdct1 = st.hdct(zy.i.hdct1)
+
+//绑定标签布局，绑定后滑动界面时标签布局会跟随运动，需要注意 标签布局 和 滑动窗体 的子项数量应一致，新增子项时也需要同时增加
+//输入标签布局的 控件id或控件对象，是否应刷新其内容
+s bdbqbj = hdct1.bdbqbj(zy.i.bqbj1, true)
+//注意：如果绑定前 标签布局 如有设置子项，绑定时会被清空。绑定后直接添加滑动窗体 的子项并设置 标题
+
+
+// 获取标签布局
+s hdct1 = st.hdct(zy.i.bqbj1)
+
+// 加标签
+hdct1.jbq("选项")
+
+
+
+// 获取页面管理
+s ym1 = hdct1.ym()
+
+
+//添加新的页面，设置的界面会执行载入事件里的代码
+//输入插入序号 如-1为尾部 0为头部，输入标题，输入界面类，输入布局资源，输入控件ID或数据ID，输入数据内容
+s ids = { zy.i.wb1, zy.i.wb2, zy.i.wb3 }
+s values = { "abc", "bac", "bbc" }
+ym1.j(-1, "标题", a.lei, zy.b.a, ids, values)
+
+
+//删除界面
+//输入滑动窗体的 控件id或控件对象，输入标识，输入界面序号 序号以0开始 -1为尾部
+ym1.sc(0)
+
+
+//修改界面标题
+//输入滑动窗体的 控件id或控件对象，输入标识，输入界面序号 序号以0开始 -1为尾部
+ym1.xg(0, "标题2")
+
+
+//获取页面数量
+s ymsl = ym1.ymsl()
+
+//释放内存
+ym1.sf()
+
+
+// 其中列表的项目所用的布局是界面 a.iyu 上面的布局，并且布局控件可以设置事件。
+
+// 在其事件中获取相关列表适配器数据
+
+// 如 a.iyu界面中 ID zy.i.wb1 的控件 的 单击触屏事件 进行 页面数据的操作
+
+
+// 页面数据的操作
+s lb2 = sj.lb(vw)
+
+// 获取列表适配器
+s lbsqp = lb2.lbspq()
+
+// 获取触发控件的位置
+s lbcfwz = lb2.lbcfwz()
+
+// 获取触发控件的数据对象
+s lbcfsj = lb2.lbcfsj()
+
+// 获取指定ID的对应数据
+s lbcfsj2 = lb2.lbcfsj(zy.i.wb1)
+
+// 获取指定位置 和 指定ID的对应数据
+s lbsj1 = lb2.lbsj(0, zy.i.wb1)
+
+// 获取指定位置数据对象
+s lbsj2 = lb2.lbsj(0)
+
+// 获取列表数据对象
+s lbsj3 = lb2.lbsj()
+
+// 获取项目根视图控件
+s lbxmst = lb2.lbxmst()
+
+
+
+【更多代码正在测试中，会逐步开放！】
