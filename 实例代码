@@ -1,3 +1,389 @@
+【控件着色】
+//iyu调用
+
+fn 着色.控件着色(id,"#ffffff")
+
+
+//新建 着色.myu
+/.
+1，更新了一个toolbar左右两边图片着色，toolbar背景上色直接us(backgroundcolor)就行
+2，更新了下新iapp控件——浮动动作按钮(FAB)的背景色及图标色的修改
+3，V4列表如果用:
+gvs(12,列表)
+java(null,列表,"android.widget.AbsListView.setFastScrollEnabled","boolean","true")
+代码调用开启了快速拖动条，那么会自动上色拖动条颜色
+./
+
+fn 控件着色(控件,颜色)
+
+java(类,控件,"java.lang.Object.getClass")
+java(类名,类,"java.lang.Class.getName")
+f(类名 == "java.lang.Integer")
+{
+  gvs(控件,控件)
+  java(类,控件,"java.lang.Object.getClass")
+  java(类名,类,"java.lang.Class.getName")
+}
+f(颜色 ? "#")
+{
+  s 小颜色=颜色
+  java(颜色,null,"android.graphics.Color.parseColor","String",颜色)
+}
+//syso(类名)
+f(类名 == "android.widget.EditText")
+{
+  fn 着色.编辑框着色(控件,颜色)
+}
+else f(类名 == "android.widget.CheckBox" || 类名 == "android.widget.RadioButton" || )
+{
+  fn 着色.单选多选着色(控件,颜色)
+}
+else f(类名 == "android.widget.ProgressBar" || 类名 == "android.widget.RatingBar")
+{
+  //RatingBar间接继承自ProgressBar，貌似这样也可以，就偷懒了  
+  fn 着色.进度条着色(控件,颜色)
+}
+else f(类名 == "android.support.v7.widget.SwitchCompat")
+{
+  fn 着色.开关着色(控件,小颜色)
+}
+else f(类名 == "android.widget.SeekBar")
+{
+  fn 着色.拖动条着色(控件,颜色)
+}
+else f(类名 == "android.widget.ImageView")
+{
+  fn 着色.图片控件着色(控件,颜色)
+}
+else f(类名 == "android.widget.ScrollView")
+{
+  fn 着色.滚动控件边缘着色(控件,颜色)
+}
+else f(类名 == "android.widget.ListView")
+{
+  fn 着色.列表控件边缘着色(控件,颜色)
+}
+else f(类名 == "android.widget.HorizontalScrollView")
+{
+  fn 着色.水平滚动边缘着色(控件,颜色)
+}
+else f(类名 == "android.support.v4.view.ViewPager")
+{
+  fn 着色.滑动窗体边缘着色(控件,颜色)
+}
+else f(类名 == "android.support.v7.widget.Toolbar")
+{  
+  fn 着色.工具栏图标着色(控件,颜色)
+}
+else f(类名 == "android.support.design.widget.FloatingActionButton")
+{  
+  fn 着色.浮动按钮着色(控件,颜色)
+}
+else
+{
+  fn 着色.背景着色(控件,颜色)
+}
+end fn
+
+
+fn 工具栏图标着色(控件,颜色)
+javags(mMode, null, "android.graphics.PorterDuff$Mode", "SRC_ATOP")
+java(back, 控件, "android.support.v7.widget.Toolbar.getNavigationIcon")
+java(menu, 控件, "android.support.v7.widget.Toolbar.getOverflowIcon")
+f(back!=null)
+{
+  java(null, back, "android.graphics.drawable.Drawable.setColorFilter", "int", 颜色, "android.graphics.PorterDuff$Mode", mMode)
+}
+f(menu!=null)
+{
+  java(null, menu, "android.graphics.drawable.Drawable.setColorFilter", "int", 颜色, "android.graphics.PorterDuff$Mode", mMode)
+}
+end fn
+
+
+
+fn 浮动按钮着色(控件,颜色)
+
+s 背景颜色 = 颜色
+java(图标颜色,null,"android.graphics.Color.parseColor","String","#ffffff")
+
+java(null, 控件, "android.widget.ImageView.setColorFilter", "int", 图标颜色)
+java(背景颜色,null,"android.content.res.ColorStateList.valueOf","int",背景颜色)
+java(null, 控件, "android.support.design.widget.FloatingActionButton.setBackgroundTintList","android.content.res.ColorStateList",背景颜色)
+
+endcode
+
+fn 编辑框着色(控件,颜色)
+fn 着色.背景着色(控件,颜色)
+javags(SDK_INT,null,"android.os.Build$VERSION","SDK_INT")
+f(SDK_INT > 12)
+{
+  //安卓版本大于3.1才支持光标着色
+  javags(dres,控件,"android.widget.TextView","mCursorDrawableRes")
+  f(dres > 0)
+  {
+    java(res,activity,"android.content.Context.getResources")
+    java(drawable,res,"android.content.res.Resources.getDrawable","int",dres)
+    fn 着色.Drawable着色(drawable,颜色)
+    javags(editor,控件,"android.widget.TextView","mEditor")
+    javags(drawables,editor,"android.widget.Editor","mCursorDrawable")
+    sssz(drawables,0,sss.drawable)
+    sssz(drawables,1,sss.drawable)    
+    //还有个问题，那个选择水滴的颜色不能改……    
+  }
+}
+end fn
+
+fn 单选多选着色(控件,颜色)
+javags(SDK_INT,null,"android.os.Build$VERSION","SDK_INT")
+f(SDK_INT >= 21)
+{
+  //5.0以上直接调用系统的设置颜色
+  java(csl,null,"android.content.res.ColorStateList.valueOf","int",颜色)
+  java(null,控件,"android.widget.CompoundButton.setButtonTintList","android.content.res.ColorStateList",csl)
+}
+else
+{
+  //5.0以下自己实现（其实5.0以上系统自己的实现也是这样）
+  javags(drawable,控件,"android.widget.CompoundButton","mButtonDrawable")
+  fn 着色.Drawable着色(drawable,颜色)
+}
+end fn
+
+fn 进度条着色(控件,颜色)
+java(是否不精确,控件,"android.widget.ProgressBar.isIndeterminate")
+f(是否不精确)
+{
+  java(drawable,控件,"android.widget.ProgressBar.getIndeterminateDrawable")
+  fn 着色.Drawable着色(drawable,颜色)
+}
+else
+{
+  java(drawable,控件,"android.widget.ProgressBar.getProgressDrawable")
+  fn 着色.Drawable着色(drawable,颜色)
+}
+end fn
+
+fn 拖动条着色(控件,颜色)
+fn 着色.进度条着色(控件,颜色)
+//SeekBar继承自ProgressBar，可以直接这样对进度值着色
+//让我偷个懒吧……
+
+java(drawable,控件,"android.widget.AbsSeekBar.getThumb")
+fn 着色.Drawable着色(drawable,颜色)
+end fn
+
+fn 开关着色(控件,颜色)
+
+slg(颜色, ifs)
+f(ifs=="7")
+{
+  ssg(颜色,1,ys)
+  ss("#50"+ys,xolor)
+}
+else f(ifs=="9")
+{
+  ssg(颜色,3,ys)
+  ss("#50"+ys,xolor)
+}
+
+s view=控件
+ug(view,"checked",if0)
+cls("android.support.v7.widget.SwitchCompat",switch_c)
+f(if0)
+{
+  javax(d,view,switch_c,"getThumbDrawable")
+  cls("android.graphics.drawable.Drawable",d_c)
+  java(color,null,"android.graphics.Color.parseColor","String",颜色)
+  javax(d2,d,d_c,"setTint","int",color)
+  javax(d,view,switch_c,"getTrackDrawable")
+  java(color,null,"android.graphics.Color.parseColor","String",xolor)
+  javax(d2,d,d_c,"setTint","int",color)
+}
+java(null, view, "android.widget.CompoundButton.setOnCheckedChangeListener", ".android.widget.CompoundButton$OnCheckedChangeListener", null)
+{
+  slg(颜色, ifs)  
+  f(ifs=="7")
+  {
+    ssg(颜色,1,ys)
+    ss("#50"+ys,xolor)
+  }
+  else f(ifs=="9")
+  {
+    ssg(颜色,3,ys)
+    ss("#50"+ys,xolor)
+  }  
+  sgsz(st_aS,0,mview)
+  ug(mview,"checked",if)
+  cls("android.support.v7.widget.SwitchCompat",switch_c)
+  f(if)
+  {
+    javax(d,mview,switch_c,"getThumbDrawable")
+    cls("android.graphics.drawable.Drawable",d_c)
+    java(color,null,"android.graphics.Color.parseColor","String",颜色)
+    javax(d2,d,d_c,"setTint","int",color)
+    javax(d,mview,switch_c,"getTrackDrawable")
+    java(color,null,"android.graphics.Color.parseColor","String",xolor)
+    javax(d2,d,d_c,"setTint","int",color)
+  }
+  else
+  {
+    javax(d,mview,switch_c,"getThumbDrawable")
+    cls("android.graphics.drawable.Drawable",d_c)
+    java(color,null,"android.graphics.Color.parseColor","String","#ececec")
+    javax(d2,d,d_c,"setTint","int",color)
+    javax(d,mview,switch_c,"getTrackDrawable")
+    java(color,null,"android.graphics.Color.parseColor","String","#9e9e9e")
+    javax(d2,d,d_c,"setTint","int",color)
+  }
+}
+
+end fn
+
+fn 图片控件着色(控件,颜色)
+java(null,控件,"android.widget.ImageView.setColorFilter","int",颜色)
+end fn
+
+fn 滚动控件边缘着色(控件,颜色)
+javags(顶部边缘,控件,"android.widget.ScrollView","mEdgeGlowTop")
+fn 着色.EdgeEffect着色(顶部边缘,颜色)
+javags(底部边缘,控件,"android.widget.ScrollView","mEdgeGlowBottom")
+fn 着色.EdgeEffect着色(底部边缘,颜色)
+end fn
+
+fn 列表控件边缘着色(控件,颜色)
+javags(顶部边缘,控件,"android.widget.AbsListView","mEdgeGlowTop")
+fn 着色.EdgeEffect着色(顶部边缘,颜色)
+javags(底部边缘,控件,"android.widget.AbsListView","mEdgeGlowBottom")
+fn 着色.EdgeEffect着色(底部边缘,颜色)
+
+javags(test,控件,"android.widget.AbsListView","mThumbVertical")
+syso(test)
+
+javags(SDK_INT,null,"android.os.Build$VERSION","SDK_INT")
+f(SDK_INT >= 21)
+{
+  javags(滑条,控件,"android.widget.AbsListView","mFastScroll")
+}
+else
+{
+  javags(滑条,控件,"android.widget.AbsListView","FastScroller")
+}
+//5.0以前把mFastScroll改为FastScroller
+f(滑条!=null)
+{
+  javags(图标,滑条,"android.widget.FastScroller","mThumbImage")  
+  fn 着色.图片控件着色(图标,颜色)
+}
+
+end fn
+
+fn 水平滚动边缘着色(控件,颜色)
+javags(左边缘,控件,"android.widget.HorizontalScrollView","mEdgeGlowLeft")
+fn 着色.EdgeEffect着色(左边缘,颜色)
+javags(右边缘,控件,"android.widget.HorizontalScrollView","mEdgeGlowRight")
+fn 着色.EdgeEffect着色(右边缘,颜色)
+end fn
+
+fn 滑动窗体边缘着色(控件,颜色)
+javags(左边缘,控件,"android.support.v4.view.ViewPager","mLeftEdge")
+fn 着色.EdgeEffectCompat着色(左边缘,颜色)
+javags(右边缘,控件,"android.support.v4.view.ViewPager","mRightEdge")
+fn 着色.EdgeEffectCompat着色(右边缘,颜色)
+end fn
+
+fn 背景着色(控件,颜色)
+java(背景,控件,"android.view.View.getBackground")
+fn 着色.Drawable着色(背景,颜色)
+end fn
+
+fn Drawable着色(drawable,颜色)
+
+//内部函数，请不要随意调用
+f(drawable != null)
+{
+  javags(atop,null,"android.graphics.PorterDuff$Mode","SRC_ATOP")
+  javanew(pdcf,"android.graphics.PorterDuffColorFilter","int",颜色,"android.graphics.PorterDuff$Mode",atop)
+  java(null,drawable,"android.graphics.drawable.Drawable.setColorFilter","android.graphics.ColorFilter",pdcf)
+  sss drawable = drawable
+}
+end fn
+
+fn EdgeEffect着色(edge,颜色)
+//内部函数，请不要随意调用
+f(edge != null)
+{
+  javags(SDK_INT,null,"android.os.Build$VERSION","SDK_INT")
+  f(SDK_INT >= 21)
+  {
+    //Api21及以上，绘制方法变化，调用系统的方法进行着色
+    java(null,edge,"android.widget.EdgeEffect.setColor","int",颜色)
+  }
+  else
+  {
+    //Api21以下，自己实现
+    javags(drawable,edge,"android.widget.EdgeEffect","mEdge")
+    fn 着色.Drawable着色(drawable,颜色)
+    javags(drawable,edge,"android.widget.EdgeEffect","mGlow")
+    fn 着色.Drawable着色(drawable,颜色)
+  }
+}
+end fn
+
+fn EdgeEffectCompat着色(edgeCompat,颜色)
+//内部函数，请不要随意调用
+f(edgeCompat != null)
+{
+  javags(edge,edgeCompat,"android.support.v4.widget.EdgeEffectCompat","mEdgeEffect")
+  fn 着色.EdgeEffect着色(edge,颜色)
+}
+end fn
+
+//禁止修改任何代码，不然会报错！！
+
+
+
+
+【单选弹窗】
+cls("android.support.v7.app.AlertDialog$Builder",class)
+javanew(dialog,class,"Context",activity)
+javax(null,dialog,class,"setTitle","CharSequence","菜单")
+//设置标题
+s menu="一;二;三;四"
+//设置菜单文本
+sl(menu,";",items)
+
+cls("android.content.DialogInterface$OnClickListener", 事件类)
+javacb(事件, 事件类)
+{
+  sgsz(st_aS,1,mult)
+  syso(mult)
+  //列表项是0开始，也就是0,1,2,3，分别代表一，二，三，四
+  f(mult==0)
+  {
+    tw("一")
+  }
+  f(mult==1)
+  {
+    tw("二")
+  }
+  //...
+}
+
+//第二个参数是打开时哪一个勾选上的，0开始
+javax(null,dialog,class,"setSingleChoiceItems","CharSequence[]",items,"int",0,事件类,事件)
+
+
+javax(null,dialog,class,"setTitle","CharSequence","菜单")
+javacb(按钮事件, 事件类)
+{
+  tw("事件")
+}
+javax(null, dialog, class, "setPositiveButton", "CharSequence", "右边按钮", 事件类, 按钮事件)
+
+javax(dialog,dialog,class,"show")
+//显示
+
 
 【修改浮动按钮背景/图片颜色】
 gvs(4,fab)
@@ -11,7 +397,7 @@ java(null, fab, "android.support.design.widget.FloatingActionButton.setBackgroun
 【base64加解密】
 
 //Base64编码：
-s 原文 = "残页"
+s 原文 = "噬心"
 java(字节数组,原文,"java.lang.String.getBytes")
 //转成byte[]字节数组
 java(密文,null,"android.util.Base64.encodeToString","byte[]",字节数组,"int",0)
