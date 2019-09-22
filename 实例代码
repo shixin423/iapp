@@ -1,3 +1,20 @@
+【RC4加解密】
+//加密
+s a1 = "原文"
+//密钥
+s a2 = "123456"
+javax(ec,null, ss.RC4, "enCode", "String", a2 ,"String",a1)
+//结果
+syso(ec)
+
+
+//解密
+s a1 = "e576e181b2b4"
+//密钥
+s a2 = "123456"
+javax(ec,null, ss.RC4, "deCode", "String", a1 ,"String",a2)
+//明文
+syso(ec)
 【控件着色】
 //iyu调用
 
