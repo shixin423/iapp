@@ -1,3 +1,52 @@
+【浏览器拉起/打开App】
+
+//浏览器>浏览器事件>加载网址之前
+java(b,st_url,"java.lang.String.startsWith","String","http")
+syso(b)
+f(b)
+{
+  us(st_vW,"url",st_url)
+  endcode
+}
+sit(a,"action","android.intent.action.VIEW")
+sit(a,"data",st_url)
+uit(a, "chooser", "链接正在唤醒APP")
+
+【菜单列表弹窗】
+cls("android.support.v7.app.AlertDialog$Builder",class)
+javanew(dialog,class,"Context",activity)
+javax(null,dialog,class,"setTitle","CharSequence","菜单")
+//设置标题
+s menu="一;二;三;四"
+//设置菜单文本
+sl(menu,";",items)
+
+//例如获取文件列表
+//fl("%iApp",items)
+
+cls("android.content.DialogInterface$OnClickListener", 事件类)
+javacb(事件, 事件类)
+{
+  sgsz(st_aS,1,mult)
+  //列表项是0开始，也就是0,1,2,3，分别代表一，二，三，四
+  /*
+  //用序列来判断点击了什么
+  f(mult==0)
+  {
+    tw("一")
+  }
+  f(mult==1)
+  {
+    tw("二")
+  }
+  */
+  sgsz(items,mult,wtm)
+  tw(wtm)
+}
+javax(null,dialog,class,"setItems","CharSequence[]",items,事件类,事件)
+javax(dialog,dialog,class,"show")
+//显示
+
 【RC4加解密】
 //加密
 s a1 = "原文"
